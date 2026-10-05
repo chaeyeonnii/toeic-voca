@@ -91,9 +91,36 @@ select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);backgrou
   .toolbar{position:static;border:0}
   body{background:#fff}
 }
+/* 비밀번호 잠금 화면 */
+html.locked body>*:not(#lock){display:none!important}
+#lock{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:16px}
+html:not(.locked) #lock{display:none}
+#lock form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 24px;width:100%;max-width:320px;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+#lock h2{margin:0 0 6px;font-size:20px;color:var(--accent-d)}
+#lock p{margin:0 0 16px;color:var(--sub);font-size:14px}
+#lock input{width:100%;font-size:22px;letter-spacing:.4em;text-align:center;padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:10px;outline:none}
+#lock input:focus{border-color:var(--accent)}
+#lock .btn{width:100%}
+#lock .err{min-height:20px;margin:8px 0 0;color:var(--ng);font-size:13.5px}
+#lock.shake form{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}}
 </style>
+<script>
+/* 잠금 해제 전에는 화면을 숨겨 내용이 잠깐 보이는 것을 막음 (탭을 닫으면 다시 잠김) */
+try{ if(sessionStorage.getItem('tv_unlock')!=='1') document.documentElement.classList.add('locked'); }
+catch(e){ document.documentElement.classList.add('locked'); }
+</script>
 </head>
 <body>
+<div id="lock">
+  <form id="lockForm" autocomplete="off">
+    <h2>🔒 잠긴 단어장</h2>
+    <p>비밀번호를 입력하세요</p>
+    <input id="lockPw" type="password" inputmode="numeric" maxlength="20" aria-label="비밀번호" autofocus>
+    <button class="btn primary big" type="submit">열기</button>
+    <div class="err" id="lockErr"></div>
+  </form>
+</div>
 <header>
   <h1>📘 파워토익 퀵스타트 · 미니 단어장 (Day 01–20)</h1>
   <div class="tabs">
@@ -1109,6 +1136,25 @@ $('#autoRm').checked = autoRemove;
 $('#autoRm').onchange = e=>{ autoRemove = e.target.checked; LS.set('tv_auto', autoRemove); };
 
 renderVocab();
+</script>
+<script>
+/* 비밀번호 잠금 */
+(()=>{
+  const PASSWORD = '0827';
+  const lock = document.getElementById('lock'), pw = document.getElementById('lockPw'), err = document.getElementById('lockErr');
+  if(document.documentElement.classList.contains('locked')) pw.focus();
+  document.getElementById('lockForm').onsubmit = e=>{
+    e.preventDefault();
+    if(pw.value === PASSWORD){
+      try{ sessionStorage.setItem('tv_unlock','1'); }catch(e){}
+      document.documentElement.classList.remove('locked');
+    }else{
+      err.textContent = '비밀번호가 틀렸어요.';
+      pw.value = ''; pw.focus();
+      lock.classList.remove('shake'); void lock.offsetWidth; lock.classList.add('shake');
+    }
+  };
+})();
 </script>
 </body>
 </html>
