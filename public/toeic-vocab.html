@@ -12,7 +12,11 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.5}
 header{background:var(--accent);color:#fff;padding:14px 16px 0}
-header h1{margin:0 0 10px;font-size:19px}
+header h1{margin:0;font-size:19px}
+.hrow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.backbtn{flex:none;border:0;background:rgba(255,255,255,.22);color:#fff;padding:7px 12px;border-radius:999px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.backbtn:hover{background:rgba(255,255,255,.32)}
+@media (max-width:560px){ header h1{font-size:17px} header h1 .long{display:none} }
 .tabs{display:flex;gap:6px}
 .tab{border:0;background:rgba(255,255,255,.22);color:#fff;padding:9px 18px;border-radius:10px 10px 0 0;font-size:15px;font-weight:600;cursor:pointer}
 .tab.on{background:var(--bg);color:var(--accent-d)}
@@ -166,7 +170,10 @@ catch(e){ document.documentElement.classList.add('locked'); }
   </div>
 </div>
 <header>
-  <h1>📘 파워토익 퀵스타트 · 미니 단어장 (Day 01–20)</h1>
+  <div class="hrow">
+    <button class="backbtn" id="backPick" aria-label="Day 다시 선택">← Day 선택</button>
+    <h1>📘 <span class="long">파워토익 퀵스타트 · </span>미니 단어장<span class="long"> (Day 01–20)</span></h1>
+  </div>
   <div class="tabs">
     <button class="tab on" data-tab="vocab">단어장</button>
     <button class="tab" data-tab="test">단어시험</button>
@@ -982,7 +989,7 @@ function renderDayGrid(){
       renderDayGrid();
     }else{
       curDay = d; vocabOrder = null;
-      closeDayPick(); showTab('vocab'); renderVocab();
+      leavePick(); showTab('vocab'); renderVocab();
     }
   });
   if(pickMode==='test'){
@@ -1000,16 +1007,31 @@ $('#pickAll').onclick = ()=>{
 $('#pickStart').onclick = ()=>{
   if(!pickSel.size) return;
   testSpecial = null; testDays = new Set(pickSel);
-  closeDayPick(); showTab('test'); buildTest();
+  leavePick(); showTab('test'); buildTest();
 };
 $('#pickToTest').onclick = ()=>openDayPick('test');
 function closeDayPick(){
   $('#dayPick').hidden = true;
   document.documentElement.classList.remove('picking');
 }
-$('#dayPickClose').onclick = closeDayPick;
-document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !$('#dayPick').hidden) closeDayPick(); });
-$('#vTitle').onclick = ()=>openDayPick();
+/* 뒤로가기 지원: 기록은 [Day 선택] → [본문] 두 단계로 유지 */
+let nextPickMode = null;
+function leavePick(){
+  closeDayPick();
+  if(history.state?.p !== 'main') history.pushState({p:'main'}, '');
+}
+function goPick(mode){
+  if(history.state?.p === 'main'){ nextPickMode = mode; history.back(); } // popstate에서 열림
+  else openDayPick(mode);
+}
+window.addEventListener('popstate', e=>{
+  if(e.state?.p === 'main') closeDayPick();
+  else { openDayPick(nextPickMode || pickMode); nextPickMode = null; }
+});
+$('#dayPickClose').onclick = leavePick;
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !$('#dayPick').hidden) leavePick(); });
+$('#vTitle').onclick = ()=>goPick('study');
+$('#backPick').onclick = ()=>goPick($('#viewTest').classList.contains('hidden') ? 'study' : 'test');
 function renderVocab(){
   const list = vocabOrder || DAYS[curDay];
   $('#vTitle').textContent = dayLabel(curDay);
@@ -1048,7 +1070,7 @@ function renderTestChips(){
     `<button class="chip range ${!testSpecial?'on':''}" id="chipRange">📅 ${rangeLabel()} ▾</button>` +
     `<button class="chip ${testSpecial==='star'?'on':''}" data-sp="star">⭐ 모르는 단어 (${starList.length})</button>` +
     `<button class="chip ${testSpecial==='wrong'?'on':''}" data-sp="wrong">❌ 오답 노트 (${Object.keys(wrongMap).length})</button>`;
-  $('#chipRange').onclick = ()=>openDayPick('test');
+  $('#chipRange').onclick = ()=>goPick('test');
   $('#testChips').querySelectorAll('.chip[data-sp]').forEach(c=>c.onclick=()=>{
     testSpecial = (testSpecial===c.dataset.sp) ? null : c.dataset.sp;
     buildTest();
@@ -1219,6 +1241,7 @@ $('#autoRm').checked = autoRemove;
 $('#autoRm').onchange = e=>{ autoRemove = e.target.checked; LS.set('tv_auto', autoRemove); };
 
 renderVocab();
+history.replaceState({p:'pick'}, '');
 openDayPick(); // 처음 열면 Day 선택 화면부터 (잠금 중이면 해제 후 보임)
 </script>
 <script>
