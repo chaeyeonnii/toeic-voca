@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# TOEIC 미니 단어장
 
-## Getting Started
+Day 01–20으로 구성된 토익 단어를 학습하고, 단어시험과 오답 복습을 할 수 있는 웹 단어장입니다. 별표로 표시한 단어와 오답 기록은 브라우저에 저장됩니다.
 
-First, run the development server:
+## 주요 기능
+
+- **단어 학습**: Day별 단어·품사·뜻·예문 확인, 뜻 가리기, 예문 숨기기, 단어 순서 섞기
+- **단어시험**: 여러 Day를 선택해 출제하고, 영어 → 한글 또는 한글 → 영어 방식으로 답안 작성
+- **채점 및 복습**: 자동 채점, 정답 확인, 점수 표시, 시험지 인쇄
+- **내 단어장**: 별표로 모르는 단어 저장, 틀린 단어 자동 수집, 오답 횟수 확인, 저장한 단어로 재시험
+- **백업 및 복원**: 모르는 단어와 오답 기록을 복사해 다른 브라우저나 기기로 이동
+- **반응형 화면**: 화면 너비에 맞춰 단어 카드와 시험 화면 배치 조정
+
+## 실행 방법
+
+Node.js **20.9.0 이상**과 npm이 필요합니다. 프로젝트 폴더에서 다음 명령어를 실행합니다.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 엽니다. 포트가 이미 사용 중이면 터미널에 표시된 주소로 접속합니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+단어장 파일은 `/toeic-vocab.html` 주소로도 직접 열 수 있습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 명령어
 
-## Learn More
+| 명령어 | 설명 |
+| --- | --- |
+| `npm run dev` | 개발 서버 실행 |
+| `npm run build` | 배포용 빌드 생성 |
+| `npm run start` | 빌드된 앱 실행 (`npm run build` 먼저 실행) |
+| `npm run lint` | ESLint 검사 |
 
-To learn more about Next.js, take a look at the following resources:
+## 사용 방법
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **단어장** 탭에서 학습할 Day를 선택합니다. 뜻을 가린 뒤 클릭해서 확인하거나 단어 순서를 섞어 복습할 수 있습니다.
+2. 외우기 어려운 단어의 **별표**를 눌러 내 단어장에 저장합니다.
+3. **단어시험** 탭에서 시험 범위와 출제 방향을 선택하고 답안을 입력합니다. Enter를 누르면 다음 답안으로 이동합니다.
+4. **채점하기**를 누르면 점수와 정답이 표시되고 틀린 단어는 오답 노트에 저장됩니다.
+5. **내 단어장**에서 모르는 단어 또는 오답 노트를 선택하고 **이 단어들로 시험보기**로 복습합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+한글 뜻 채점은 문자열 비교 방식이며 일부 일치도 정답으로 인정합니다. 채점 결과가 의도와 다르면 결과의 **O/X를 클릭**해 직접 변경할 수 있습니다. **맞히면 오답노트에서 삭제** 옵션으로 복습한 단어를 정리할 수 있습니다.
 
-## Deploy on Vercel
+## 데이터 저장 및 백업
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+별도의 로그인이나 서버 데이터베이스 없이 `localStorage`에 저장합니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 저장 키 | 내용 |
+| --- | --- |
+| `tv_star` | 별표로 표시한 단어 목록 |
+| `tv_wrong` | 단어별 오답 횟수 |
+| `tv_auto` | 정답을 맞힌 단어의 오답 노트 자동 삭제 설정 |
+
+저장 기록은 브라우저와 접속 주소(프로토콜·호스트·포트)에 따라 구분됩니다. 브라우저의 사이트 데이터를 삭제하면 기록도 삭제되며, 기기 간 자동 동기화는 지원하지 않습니다.
+
+다른 기기로 옮기려면 **내 단어장 → 백업 복사**로 복사한 텍스트를 보관한 뒤, 새 기기의 **백업 복원**에 붙여넣습니다. 복원 시 별표 목록은 기존 목록에 합쳐지고, 같은 단어의 오답 횟수는 더 큰 값을 유지합니다. 자동 삭제 설정은 백업에 포함되지 않습니다.
+
+## 프로젝트 구조
+
+```text
+public/
+  toeic-vocab.html    # 단어장 화면, 스타일, 단어 데이터, 학습 로직
+src/app/
+  page.tsx           # Next.js 기본 페이지 (현재 첫 화면은 HTML로 연결)
+  layout.tsx         # Next.js 루트 레이아웃
+  globals.css        # Next.js 전역 스타일
+next.config.ts       # 루트 주소를 단어장 HTML로 연결하는 rewrite 설정
+package.json         # 의존성과 실행 명령어
+```
+
+현재 단어장은 **`public/toeic-vocab.html` 하나에 HTML·CSS·JavaScript를 포함**한 형태입니다. Next.js는 개발 및 서비스 실행 환경으로 사용하며, `next.config.ts`의 `beforeFiles` rewrite가 `/` 요청을 `/toeic-vocab.html`로 연결합니다.
+
+따라서 단어장 화면이나 기능을 바꾸려면 `public/toeic-vocab.html`을 수정합니다. `src/app`에 일반 HTML 파일을 추가하는 것만으로는 페이지가 만들어지지 않습니다.
+
+### 단어 데이터 수정
+
+`public/toeic-vocab.html`의 `RAW` 객체에 Day별 데이터가 들어 있습니다. 각 줄은 다음 형식입니다.
+
+```text
+단어|[품사] 뜻|예문
+```
+
+예시:
+
+```text
+abundant|[형] 풍부한, 많은|abundant food 풍부한 음식
+```
+
+품사 표시는 `[명]`, `[동]`, `[형]`, `[부]`를 사용합니다. `|`는 필드 구분자이므로 뜻이나 예문 내부에는 넣지 않습니다.
+
+## 기술 구성
+
+- **실행 환경**: Next.js 16.3.8, React 19.2.8
+- **단어장 구현**: HTML, CSS, Vanilla JavaScript
+- **로컬 저장**: Web Storage API (`localStorage`)
+- **프로젝트 도구**: TypeScript 5, ESLint 9, Tailwind CSS 4
+
+단어장 자체 스타일은 HTML 내부의 CSS로 작성되어 있습니다.

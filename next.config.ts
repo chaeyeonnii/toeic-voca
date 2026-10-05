@@ -2,7 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    return [{ source: "/", destination: "/vocab.html" }];
+    return {
+      beforeFiles: [{ source: "/", destination: "/toeic-vocab.html" }],
+    };
   },
 };
 
