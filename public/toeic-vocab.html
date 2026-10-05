@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>파워토익 미니 단어장</title>
+<style>
+:root{
+  --bg:#faf6f3; --card:#fff; --ink:#2b2523; --sub:#7a6e69; --line:#eadfd9;
+  --accent:#d9573b; --accent-d:#b8432b; --soft:#fcece6; --ok:#2e9e5b; --ng:#d63b3b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.5}
+header{background:var(--accent);color:#fff;padding:14px 16px 0}
+header h1{margin:0 0 10px;font-size:19px}
+.tabs{display:flex;gap:6px}
+.tab{border:0;background:rgba(255,255,255,.22);color:#fff;padding:9px 18px;border-radius:10px 10px 0 0;font-size:15px;font-weight:600;cursor:pointer}
+.tab.on{background:var(--bg);color:var(--accent-d)}
+main{max-width:980px;margin:0 auto;padding:14px 14px 60px}
+.hidden{display:none!important}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+.chip{border:1px solid var(--line);background:#fff;color:var(--ink);padding:6px 11px;border-radius:999px;font-size:13.5px;cursor:pointer}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.chip.ghost{border-style:dashed;color:var(--sub)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:10px;font-size:14px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.btn.primary:hover{background:var(--accent-d)}
+.btn.big{font-size:16px;padding:10px 20px}
+.toggle{font-size:14px;display:flex;align-items:center;gap:5px;color:var(--sub);cursor:pointer;user-select:none}
+.daytitle{display:flex;align-items:baseline;gap:10px;margin:4px 0 12px}
+.daytitle h2{margin:0;font-size:28px;color:var(--accent-d)}
+.daytitle span{color:var(--sub);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
+.wcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.wcard .top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.wcard .no{color:var(--sub);font-size:12px;min-width:20px}
+.wcard .w{font-size:19px;font-weight:800}
+.wcard .mean{margin-top:4px;font-size:15px;cursor:default}
+.wcard .ex{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);font-size:13.5px;color:var(--sub)}
+.wcard .ex b{color:var(--ink);font-weight:600}
+.hide-mean .mean .mtext{filter:blur(7px);cursor:pointer;transition:filter .15s}
+.hide-mean .mean.show .mtext{filter:none}
+.hide-ex .ex{display:none}
+.pos{display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:0 5px;margin-right:3px;border:1px solid;vertical-align:1px}
+.pos[data-p="명"]{color:#2a6fb5;background:#e8f1fb;border-color:#b5d0ee}
+.pos[data-p="동"]{color:#c0392b;background:#fdecea;border-color:#f2b9b2}
+.pos[data-p="형"]{color:#2e8b57;background:#e8f6ee;border-color:#b3dfc4}
+.pos[data-p="부"]{color:#a1620d;background:#fff3e0;border-color:#f1d29b}
+.pager{display:flex;justify-content:space-between;gap:8px;margin-top:18px}
+
+/* test */
+.toolbar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.toolbar .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:14px}
+.score{margin-left:auto;font-weight:800;color:var(--accent-d)}
+.sheet{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.sheet h3{margin:0;padding:12px 16px;background:var(--soft);font-size:15px;border-bottom:1px solid var(--line)}
+.q{display:grid;grid-template-columns:34px minmax(110px,1.1fr) minmax(130px,1.6fr) 54px;gap:8px;align-items:center;padding:8px 14px;border-bottom:1px solid #f3ebe6}
+.q:last-child{border-bottom:0}
+.q .n{color:var(--accent);font-weight:800}
+.q .p{font-weight:700;font-size:16px}
+.q .p.ko{font-size:14.5px;font-weight:600}
+.q input{width:100%;padding:8px 10px;border:0;border-bottom:2px solid var(--line);font-size:15px;background:transparent;outline:none}
+.q input:focus{border-bottom-color:var(--accent)}
+.q .res{text-align:center;font-weight:900;font-size:18px;cursor:pointer;user-select:none}
+.q.ok{background:#f1fbf5}.q.ok .res{color:var(--ok)}
+.q.ng{background:#fff3f2}.q.ng .res{color:var(--ng)}
+.q .ans{grid-column:2 / 5;font-size:13.5px;color:var(--ng);display:none}
+.q .ans.on{display:block}
+.q.ok .ans{color:var(--ok)}
+.empty{padding:30px;text-align:center;color:var(--sub)}
+.star{border:0;background:none;font-size:21px;cursor:pointer;color:#cfc6c1;padding:0 2px;line-height:1}
+.star.on{color:#f5a623}
+.wcard .top .star{margin-left:auto}
+.q .p .star{font-size:17px;margin-left:4px;vertical-align:-1px}
+.badge-wrong{font-size:11px;color:var(--ng);border:1px solid #f2b9b2;background:#fff3f2;border-radius:999px;padding:0 7px}
+.tag{font-size:11px;color:var(--sub);background:var(--soft);border-radius:999px;padding:0 7px}
+.btn.sm{padding:4px 9px;font-size:12px}
+.note{color:var(--sub);font-size:12.5px;margin:0 0 10px}
+@media (max-width:560px){
+  .q{grid-template-columns:28px 1fr 44px}
+  .q .p{grid-column:2 / 4}
+  .q .in{grid-column:2 / 3}
+  .q .res{grid-column:3 / 4;grid-row:2}
+  .q .ans{grid-column:2 / 4}
+}
+@media print{
+  header,.toolbar .row,.chips,.pager,.tabs{display:none!important}
+  .toolbar{position:static;border:0}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>📘 파워토익 퀵스타트 · 미니 단어장 (Day 01–20)</h1>
+  <div class="tabs">
+    <button class="tab on" data-tab="vocab">단어장</button>
+    <button class="tab" data-tab="test">단어시험</button>
+    <button class="tab" data-tab="mine">내 단어장</button>
+  </div>
+</header>
+
+<main>
+  <!-- 단어장 -->
+  <section id="viewVocab">
+    <div class="chips" id="vocabChips"></div>
+    <div class="bar">
+      <label class="toggle"><input type="checkbox" id="hideMean"> 뜻 가리기 (클릭하면 보임)</label>
+      <label class="toggle"><input type="checkbox" id="hideEx"> 예문 숨기기</label>
+      <button class="btn" id="vocabShuffle">🔀 이 Day 단어 섞기</button>
+      <button class="btn" id="vocabReset">원래 순서</button>
+    </div>
+    <div class="daytitle"><h2 id="vTitle"></h2><span id="vCount"></span></div>
+    <div class="grid" id="vocabGrid"></div>
+    <div class="pager">
+      <button class="btn" id="prevDay">← 이전 Day</button>
+      <button class="btn primary" id="nextDay">다음 Day →</button>
+    </div>
+  </section>
+
+  <!-- 단어시험 -->
+  <section id="viewTest" class="hidden">
+    <div class="toolbar">
+      <div class="row">
+        <button class="btn primary big" id="refresh">🔄 새로고침 (순서 섞기)</button>
+        <select id="mode">
+          <option value="en2ko">영어 → 한글 뜻 쓰기</option>
+          <option value="ko2en">한글 뜻 → 영어 쓰기</option>
+        </select>
+        <button class="btn" id="gradeBtn">✅ 채점하기</button>
+        <button class="btn" id="ansBtn">👀 정답 보기</button>
+        <button class="btn" id="printBtn">🖨 인쇄</button>
+        <label class="toggle"><input type="checkbox" id="autoRm"> 맞히면 오답노트에서 삭제</label>
+        <span class="score" id="score"></span>
+      </div>
+    </div>
+    <div class="chips" id="testChips"></div>
+    <div class="sheet">
+      <h3 id="sheetTitle"></h3>
+      <div id="sheetBody"></div>
+    </div>
+  </section>
+  <!-- 내 단어장 -->
+  <section id="viewMine" class="hidden">
+    <div class="chips" id="mineChips"></div>
+    <div class="bar">
+      <button class="btn primary" id="mineTest">🎯 이 단어들로 시험보기</button>
+      <label class="toggle"><input type="checkbox" id="mineHide"> 뜻 가리기 (클릭하면 보임)</label>
+      <button class="btn" id="mineClear">🗑 목록 비우기</button>
+      <button class="btn" id="mineExport">백업 복사</button>
+      <button class="btn" id="mineImport">백업 복원</button>
+    </div>
+    <p class="note">⭐는 단어장·시험 화면 어디서든 누르면 모르는 단어로 저장됩니다. 시험에서 틀린 단어는 오답 노트에 자동 저장돼요. 이 기기의 브라우저에 저장되므로 폰과 PC가 서로 다르면 "백업 복사 → 복원"으로 옮기세요.</p>
+    <div class="grid" id="mineGrid"></div>
+  </section>
+</main>
+
+<script>
+/* 데이터 형식: 단어|[품사] 뜻|예문 */
+const RAW = {
+1:`announce|[동] 발표하다, 알리다|announce a change 변화를 발표하다 · announce a plan 계획을 알리다
+facility|[명] 시설, 기관|a recycling facility 재활용 시설
+conduct|[동] 진행하다, 실시하다, 지휘하다|conduct an interview 인터뷰하다 · conduct a survey 설문 조사하다
+appointment|[명] 약속, 임명, 지명|schedule an appointment 약속을 잡다
+permission|[명] 허가, 허락, 승인|written permission 서면 허가
+extensive|[형] 광범위한, 대규모의, 폭넓은|extensive research 광범위한 조사 · extensive knowledge 폭넓은 지식
+favorable|[형] 호의적인, 유리한, 좋은|favorable reviews 호의적인 평가, 호평
+temporarily|[부] 일시적으로, 잠정적으로|temporarily close 일시적으로 닫다
+personally|[부] 직접, 개인적으로 (= in person)|personally respond 직접 답변하다
+address|[동] 처리하다; 연설하다 [명] 주소|address an issue 문제를 처리하다
+remove|[동] 제거하다, 없애다; (옷, 모자 등을) 벗다|remove stains 얼룩을 제거하다
+renew|[동] 갱신하다, 연장하다|renew a subscription 구독을 갱신하다
+notify|[동] ~에게 알리다, ~에게 통보하다|notify you of our decision 우리의 결정 사항을 통보하다
+notice|[명] 통보, 통지, 공고문, 안내문 [동] 알아차리다, 주목하다|advance notice 사전 통보
+negotiation|[명] 협상, 협의|after a month of negotiation 한 달 간의 협상 후에
+agenda|[명] (회의) 안건, 의제|a meeting agenda 회의 안건
+opening|[명] 공석, 빈자리, 개막식, 개관식|job openings 일자리
+opportunity|[명] 기회|an opportunity to V ~할 기회
+fragile|[형] 깨지기 쉬운, 취약한|fragile items 깨지기 쉬운 물품들
+supervisor|[명] 감독관, 관리자, 상관|an immediate supervisor 직속 상관
+exceed|[동] 초과하다, 넘다|exceed speed limit 제한 속도를 초과하다 · exceed expectations 기대를 넘다
+relatively|[부] 상대적으로, 비교적|relatively lightweight 비교적 가벼운
+unanimously|[부] 만장일치로|unanimously choose 만장일치로 선택하다
+disregard|[동] 무시하다, 묵살하다 [명] 무시|disregard this e-mail 이 이메일을 무시하다
+acquire|[동] 얻다, 획득하다, 인수하다|acquire a company 회사를 인수하다
+accurate|[형] 정확한|an accurate estimate 정확한 견적
+costly|[형] 값비싼|costly renovations 비싼 보수공사
+perishable|[형] 잘 상하는, 부패하기 쉬운|perishable products 상하기 쉬운 제품들
+refreshments|[명] 다과|light refreshments 간단한 다과
+budget|[명] 예산 [형] 저가의, 저렴한 [동] 예산을 책정하다|a budget cut 예산 삭감
+minor|[형] 작은, 사소한; 소수의 [명] 미성년자|a minor issue 사소한 문제
+unfortunately|[부] 안타깝게도, 공교롭게도|Unfortunately, we lost. 안타깝게도, 우리가 졌어요.`,
+
+2:`obtain|[동] 얻다, 승인하다|obtain approval 승인을 얻다
+attend|[동] 참석하다|attend an event 행사에 참석하다
+missing|[형] 분실된, 빠진, 실종된|missing parts 빠진 부품들
+nearly|[부] 거의|nearly complete 거의 끝난 · nearly 30% 거의 30%
+major|[형] 주요한 [명] 전공|major credit cards 주요 신용카드
+updated|[형] 업데이트된, 최신의, 갱신된|updated version 최신 버전
+mandatory|[형] 의무적인, 필수의|mandatory training sessions 의무 훈련 과정
+recently|[부] 최근에|recently renovated 최근에 보수된
+modify|[동] 수정하다|modify the terms (계약) 조건을 수정하다
+typically|[부] 일반적으로, 보통|typically cost $100 일반적으로 100달러이다
+itinerary|[명] 여행 일정(표)|a travel itinerary 여행 일정
+efficient|[형] 효율적인, 유능한|energy efficient 에너지 효율이 좋은
+consistently|[부] 일관적으로, 꾸준히, 한결같이|consistently high 한결같이 높은
+attract|[동] 끌어들이다|attract tourists 관광객을 끌어들이다 · attract funds 자금을 끌어 모으다
+limited|[형] 제한된, 한정된|for a limited time only 한시적으로만
+assistance|[명] 도움, 지원|seek assistance 도움을 구하다
+object|[동] 반대하다 [명] 물체|object to ~에 반대하다
+shortage|[명] 부족 (유 lack)|a shortage of labor 노동력 부족
+rigorous|[형] 엄격한, 철저한|a rigorous standard 엄격한 기준
+largely|[부] 주로, 대개|due largely to 주로 ~ 때문에
+donate|[동] 기부하다, 기증하다|donate used books 중고책을 기부하다
+upcoming|[형] 다가오는, 곧 있을|an upcoming event 다가오는 행사
+application|[명] 지원서, 신청서|accept applications 지원서를 받다
+hesitate|[동] 주저하다, 망설이다|hesitate to V ~하기를 망설이다
+expert|[명] 전문가 [형] 전문적인, 전문가의|expert advice 전문가의 조언
+analysis|[명] 분석|an in-depth analysis 심층 분석
+ideal|[형] 이상적인|an ideal location 이상적인 장소
+occasionally|[부] 가끔, 종종 (= on occasion)|occasionally occur 가끔 발생하다
+locate|[동] 찾다; 위치시키다, 두다|locate an item 물건을 찾다
+authentic|[형] 진짜의, 진품의|authentic pottery 진품 도자기
+eager|[형] 열렬한, 갈망하는|be eager to V ~하기를 갈망하다
+sustainable|[형] 지속 가능한|sustainable energy 지속 가능한 에너지`,
+
+3:`annual|[형] 연례의, 연간의|an annual event 연중 행사
+volunteer|[동] 자원하다, 자진하다 [명] 자원봉사자, 자원해서 하는 사람|volunteer to V 자원해서 ~하다
+usage|[명] 사용, 사용량, 용법|water usage 물 사용
+reduce|[동] 줄이다, 인하하다|reduce prices 가격을 인하하다
+convenience|[명] 편의, 편리|at your convenience 편하실 때
+demanding|[형] 힘든, 까다로운, 요구가 많은|a demanding course 힘든 수업 · a demanding supervisor 까다로운 상관
+directly|[부] 곧장, 바로|directly across from 바로 ~ 맞은편에
+improve|[동] 개선하다, 향상시키다, 개선되다|improve relations 관계를 개선하다
+official|[형] 공식적인, 공인된 [명] 공무원, 임원|the official launch 공식 출시 · a city official 시 공무원
+spend|[동] (돈, 시간 등을) 쓰다, 들이다|spend a fortune 거금을 쓰다
+consumer|[명] 소비자|consumer confidence 소비자 신뢰(도)
+totally|[부] 완전히, 전적으로|totally agree 전적으로 동의하다
+regional|[형] 지역의|a regional manager 지역 담당자
+talented|[형] 재능이 있는|a talented musician 재능 있는 음악가
+mayor|[명] 시장, 구청장|run for mayor 시장 선거에 출마하다
+suddenly|[부] 갑자기|break suddenly 갑자기 고장 나다
+auction|[명] 경매|a charity auction 자선 경매
+sample|[명] 샘플, 견본, 표본 [동] 시식하다, 시도해 보다|sample some cake 케이크를 시식하다
+perspective|[명] 관점, 견해|a new perspective on the issue 문제에 대한 새로운 견해
+income|[명] 수입, 소득|a source of income 수입원
+promote|[동] 홍보하다; 승진시키다|promote a new product 신제품을 홍보하다
+résumé|[명] 이력서 [동] 재개하다[되다]|submit a résumé 이력서를 제출하다
+destination|[명] 목적지|a delivery destination 배송 목적지
+ability|[명] 능력|an ability to V ~하는 능력
+strictly|[부] 엄격히|strictly enforce 엄격히 시행하다
+meticulously|[부] 꼼꼼하게, 세심하게|meticulously plan 꼼꼼하게 계획을 세우다
+investigate|[동] 조사하다|investigate all options 모든 방안을 조사하다
+finalize|[동] 마무리 짓다, 끝내다|finalize a plan 계획을 마무리 짓다
+compensation|[명] 보상(금)|financial compensation 재정적 보상
+inquiry|[명] 질문, 문의; 조사, 연구|inquiries regarding ~에 관한 질문들
+assistant|[명] 조수, 비서, 보조원|an administrative assistant 행정 비서
+prominently|[부] 눈에 띄게, 두드러지게|prominently displayed 눈에 띄게 진열된`,
+
+4:`vary|[동] 달라지다, 다르다|vary widely 매우 다르다, 매우 다양하다
+present|[형] 출석한, 현재의 [동] 제시하다, 주다 [명] 선물|the present owner 현 소유주 · present an award 상을 수여하다
+supervision|[명] 감독, 관리, 지도|under one's supervision ~의 감독 하에
+steady|[형] 꾸준한, 변함없는|a steady increase 꾸준한 증가
+periodically|[부] 정기적으로|periodically check 정기적으로 검사하다
+subscription|[명] 구독, 가입|a subscription to ~ 구독, 가입
+explore|[동] 알아보다, 조사하다, 탐험하다|explore opportunities 기회를 모색하다
+await|[동] 기다리다 (= wait for)|eagerly wait 열렬하게 기다리다
+surrounding|[형] 주변의, 인근의|the surrounding area 인근 지역
+estimate|[명] 견적(서), 추정(치) [동] 추산하다|a conservative estimate 약간 적게 잡은 추정치
+establish|[동] 설립하다, (관계를) 수립하다|establish a relationship 관계를 수립하다
+objective|[명] 목적, 목표 [형] 객관적인|a long-term objective 장기 목표
+storage|[명] 저장, 보관|a storage facility 보관 시설
+tentative|[형] 잠정적인|a tentative schedule 잠정적인 일정
+capable|[형] ~을 할 수 있는, 유능한|be capable of -ing ~을 할 수 있다
+exclusively|[부] 전적으로, 오로지|available exclusively to ~만 이용할 수 있는
+status|[명] 상황, 상태; 지위|the status of the order 주문 (처리) 상태
+impressed|[형] 감동을 받은|be impressed with[by] ~에 감동받다
+policy|[명] 정책, 방침|our return policy 우리의 환불[반품] 정책
+warehouse|[명] 창고|an abandoned warehouse 방치된 창고
+vacant|[형] 비어 있는, (일자리가) 결원의|a vacant position 공석인 자리 (= an open position)
+prevent|[동] 막다, 예방하다|prevent A from -ing A가 ~하는 것을 막다
+widely|[부] 넓게, 폭넓게, 대단히|widely fluctuating 폭넓게 변동하는
+dramatically|[부] 극적으로, 급격히|increase dramatically 급격히 증가하다
+delay|[명] 지연 [동] 지연시키다|frequent delays 잦은 지연
+release|[동] 공개하다 [명] 공개, 출시|release a publication 출판물을 발표하다 · a press release 언론 공식 발표, 보도 자료
+proceed|[동] 계속해서 진행하다, 이동하다|proceed with ~을 계속하다 · proceed to ~로 이동하다
+administrative|[형] 관리상의, 행정상의|an administrative staff 행정직원
+refuse|[동] 거절하다|refuse to V ~하는 것을 거절하다
+material|[명] 재료, 자료; 성분, 소재|promotional material 홍보 자료
+initial|[형] 처음의, 초기의, 원래의|an initial investment 초기 투자
+rewarding|[형] 보람 있는, 수익이 많이 나는|rewarding experience 보람 있는 경험`,
+
+5:`lively|[형] 활기 넘치는, 의욕적인|lively conversation 활기 넘치는 대화
+competition|[명] (가산) 대회, 시합; (불가산) 경쟁|a fierce competition 치열한 경쟁
+brief|[형] 짧은, 간단한 [동] 보고하다|a brief report 짧은 보고서 · brief A on B A에게 B에 대해 보고하다
+allow|[동] 허락하다|allow A to V A가 ~하도록 허락하다
+prospect|[명] 가망, 전망, 가능성|job prospects 취업 전망
+permanent|[형] 영구적인|a permanent position 정규직 · a permanent exhibition 상설 전시
+immediately|[부] 즉시|immediately after ~한 직후
+formerly|[부] 이전에|formerly owned by 이전에 ~의 소유였던
+separately|[부] 따로따로, 별도로|sold separately 별도로 판매되는
+electronically|[부] 온라인상으로, 컴퓨터로|submitted electronically 온라인상으로 접수되는
+outgoing|[형] 떠나는, 나가는; 외향적인|outgoing mail 발신 우편물
+recruit|[동] 채용하다 [명] 신입 사원|recruit a new employee 신입 사원을 채용하다
+grant|[동] 승인하다 [명] 보조금|grant access to ~에 접근[출입]을 승인하다 · a government grant 정부 보조금
+prototype|[명] 시제품|create a prototype 시제품을 제작하다
+commercial|[형] 상업적인 [명] 광고|commercial or residential 상업 또는 주거용의
+highly|[부] 매우, 대단히|highly recommend 매우 추천하다 · highly profitable 매우 수익성이 좋은
+easily|[부] 틀림없이, 필시; 쉽게|easily the best 필시 최고의
+reimburse|[동] 상환하다, 변상하다|reimburse expenses 경비를 상환하다
+cancel|[동] 취소하다|cancel an appointment 약속[예약]을 취소하다
+contain|[동] 포함하다; 방지하다|contain capital letters 대문자를 포함하다
+innovative|[형] 획기적인|an innovative design 획기적인 디자인
+priority|[명] 우선순위|top priority 최우선 순위
+preserve|[동] 지키다, 보존하다|preserve the environment 환경을 보존하다
+evaluate|[동] 평가하다|evaluate one's performance ~의 실적을 평가하다
+means|[명] 수단, 방법|preferred means 선호되는 수단
+enclosed|[형] 동봉된; 둘러싸인, 폐쇄된|the enclosed form 동봉된 서식 · the enclosed area 폐쇄된 구역
+necessary|[형] 필요한|the necessary qualifications 필요한 자격
+consider|[동] 고려하다|consider working abroad 해외 근무를 고려하다
+utility|[명] (전기, 수도 등의) 공공시설, 공공사업|a utility bill 공공 요금
+contact|[명] 연락, 접촉 [동] 연락하다|contact information 연락처
+supply|[동] 공급하다 [명] 공급품, 물품|supply A with B A에게 B를 공급하다 · office supplies 사무 용품
+promotion|[명] 승진; 판촉 행사, 홍보|get a promotion 승진하다 · a special promotion 특별 판촉 행사`,
+
+6:`propose|[동] 제안하다|propose a partnership 협업 관계를 제안하다
+provide|[동] 제공하다|provide A with B A에게 B를 제공하다
+method|[명] 방법|a method of payment 지불 방식
+function|[명] 기능, 행사 [동] 기능하다|a company function 회사 행사 · function properly 제대로 작동하다
+reliable|[형] 신뢰할 수 있는|a reliable source 믿을 만한 소식통[출처]
+entirely|[부] 전적으로, 완전히, 전부|be entirely made up of 전부 ~로 만들어지다
+shortly|[부] 곧|shortly after ~한 직후
+record|[동] 기록하다, 녹화하다 [명] 기록|keep records of ~을 기록하다
+manual|[명] 설명서 [형] 수동의|consult a manual 설명서를 참조하다
+reputation|[명] 평판, 명성|earn a reputation 명성을 얻다
+properly|[부] 제대로, 적절히|work properly 제대로 작동하다
+experienced|[형] 경험 많은, 숙련된, 노련한|an experienced salesperson 노련한 영업사원
+absence|[명] 부재, 결석|in one's absence ~의 부재 중에
+performance|[명] 공연, 성과, 성능|a performance review 업무 평가
+organize|[동] 준비하다, 조직하다|organize a meeting 회의를 준비하다
+equipment|[명] (불가산) 장비, 기기|safety equipment 안전 장비
+regularly|[부] 정기적으로|inspect A regularly A를 정기적으로 점검하다
+exchange|[동] 교환하다 [명] 교환|exchange A for B A를 B로 교환하다
+inform|[동] 알리다, 통지하다|inform A of B A에게 B를 알리다
+participate|[동] 참석하다|participate in ~에 참석하다
+refund|[명] 환불 [동] 환불하다|a full refund 전액 환불
+currently|[부] 현재|currently in stock 현재 재고가 있는
+colleague|[명] 동료 (= coworker)|consult a colleague 동료와 상담하다
+complimentary|[형] 무료의|a complimentary shuttle service 무료 셔틀 서비스
+alternatively|[부] 그 대신에, 다른 방법으로는|Alternatively, Tuesday works as well. 그 대신에, 화요일도 가능합니다.
+forecast|[명] 예보 [동] 예측하다, 예보하다|a weather forecast 날씨 예보
+prestigious|[형] 권위 있는, 명성 있는|a prestigious award 권위 있는 상
+temporary|[형] 일시적인, 임시의|a temporary password 임시 비밀번호
+approach|[동] 다가오다 [명] 접근법|marketing approaches 마케팅 접근법
+relocate|[동] 이전하다|relocate the offices 사무실을 이전하다
+lack|[동] 부족하다 [명] 부족|a lack of space 공간의 부족
+internal|[형] 내부의 (반 external 외부의)|an internal audit 내부 감사`,
+
+7:`collaborate|[동] 협력하다, 협동하다|collaborate on ~에 대해 협력하다 · collaborate with ~와 협력하다
+intend|[동] 의도하다|intend to V ~할 작정이다
+asset|[명] 재산, 자산이 되는 물건(또는 사람)|a valuable asset 중요한 자산
+transaction|[명] 거래, 매매|the date of transaction 거래 날짜
+numerous|[형] 수많은|numerous candidates 수많은 지원자들
+specifically|[부] 특별히, 분명히|specifically designed for 특별히 ~를 위해 고안된
+finally|[부] 마침내, 드디어|After a long wait, Jennie finally got a job. 오랜 기다림 끝에, Jennie는 드디어 직업을 구했다.
+merger|[명] 합병|an upcoming merger 곧 있을 합병
+detour|[명] 우회로 [동] 우회하다|take a detour 우회하다
+comprehensive|[형] 종합적인, 포괄적인|a comprehensive list 종합 리스트
+career|[명] 경력, 직업, 진로|a career path 진로
+register|[동] 등록하다 [명] 등록부|register for ~에 등록하다
+defect|[명] 결함|a manufacturing defect 제조상의 결함
+originally|[부] 원래, 본래; 독창적으로|as originally planned 원래 계획된 대로
+represent|[동] 대표하다, 나타내다|represent the company 회사를 대표하다
+oversee|[동] 감독하다|oversee a project 프로젝트를 감독하다
+aim|[동] 목표하다 [명] 목표|aim to V ~하는 것을 목표로 하다
+substitute|[동] 대체하다 [명] 대체물, 대리자|substitute A for B B를 A로 대체하다
+access|[명] (불가산) 접근, 접속, 출입 [동] 접근[접속]하다|have access to ~에 접근[출입]할 수 있다
+responsibility|[명] 책임, 의무, 할 일|take responsibility for ~을 책임 지다
+additional|[형] 추가적인|an additional cost 추가 비용
+professional|[명] 전문가 [형] 전문적인|marketing professionals 마케팅 전문가들
+valid|[형] 유효한, 타당한|This coupon is valid until March 31. 이 쿠폰은 3월 31일까지 유효하다
+eligible|[형] 자격이 있는|be eligible for/to V ~할 자격이 있다, ~의 대상이 되다
+approximately|[부] 대략|approximately 50% 대략 50 퍼센트
+leave|[동] 떠나다, 남겨두다 [명] 휴가|on leave 휴가 중인
+process|[명] 절차, 과정 [동] 처리하다, 가공하다|a registration process 등록 절차
+vote|[동] 투표하다 [명] 표, 투표|vote for ~에게 (찬성) 투표하다 · vote against ~에게 반대표를 던지다
+seating|[명] 좌석, 자리|a seating capacity 좌석 수용력
+proof|[명] 증거, 증명(서)|proof of residency 거주 증명서
+assign|[동] 배정하다, 할당하다, 부여하다|assign a new task to Mr. Kim 김 씨에게 새로운 업무를 배정하다
+solicit|[동] 간청하다, 부탁하다|solicit financial assistance 재정 원조를 부탁하다`,
+
+8:`approve|[동] 승인하다, 허가하다|approve a plan 계획을 승인하다
+celebrate|[동] 축하하다, 기념하다|celebrate an anniversary 기념일을 축하하다
+replace|[동] 대체하다, 대신하다|replace A with B A를 B로 대체하다
+postpone|[동] 연기하다, 미루다|postpone the meeting 회의를 연기하다
+permit|[동] 허용하다 [명] 허가증|a parking permit 주차 허가증
+successful|[형] 성공적인|a successful candidate 합격자, 당선자
+generally|[부] 일반적으로, 보통 (= in general)|generally speaking 일반적으로 말하면
+important|[형] 중요한|It is important to V ~하는 것은 중요하다
+assume|[동] 가정하다, 추측하다; (책임을) 맡다|assume responsibility for ~의 책임을 맡다 · assume that S+V ~라고 가정하다
+interfere|[동] 방해하다, 간섭하다|interfere with ~을 간섭하다
+expertise|[명] 전문지식|a wealth of expertise 풍부한 전문지식
+gain|[동] 얻다 [명] 이득, 증가|gain a reputation 명성을 얻다 · significant gains 엄청난 수익
+exceptional|[형] 아주 뛰어난, 특출한, 이례적인|an exceptional performance 아주 뛰어난 성과
+durable|[형] 내구성 있는, 튼튼한|a durable fabric 내구성 있는 천
+commonly|[부] 흔히|commonly used 흔히 사용되는
+normally|[부] 보통|I normally commute by subway. 나는 보통 지하철로 출퇴근한다.
+promptly|[부] 즉시, (시간이) 정확히|promptly after ~한 직후 · promptly at 5 P.M. 정각 오후 5시
+purchase|[동] 구매하다 [명] 구매(품)|make a purchase 구매하다
+potential|[형] 잠재력 있는 [명] 잠재력|a potential customer 잠재 고객
+advantage|[명] 이점, 이익, 우위|take advantage of ~을 이용하다
+charity|[명] 자선, 구호, 자선 행사|a charity event 자선 행사
+enthusiastic|[형] 열정적인|be enthusiastic about ~에 대해 열정적이다
+resident|[명] 거주자, 주민 [형] 상주하는|a local resident 지역 주민
+indefinitely|[부] 무기한으로|delayed indefinitely 무기한으로 연기된
+emphasize|[동] 강조하다|emphasize the importance 중요성을 강조하다
+revenue|[명] 수입, 수익|sales revenue 영업매출
+preference|[명] 선호(도)|a preference for ~에 대한 선호(도)
+unattended|[형] 주인 없는, 방치된|left unattended 방치된 채로 있는
+relevant|[형] 관련 있는|relevant to ~와 관련 있는
+commemorate|[동] 기념하다, 축하하다|commemorate Ms. Sidle's accomplishments Sidle 씨의 업적을 기념하다
+subsidiary|[명] 자회사 [형] 자회사의, 부수적인|overseas subsidiary 해외 자회사
+courtesy|[명] 공손함 [형] 무료의, 서비스의|(as) courtesy of ~ 덕분에, ~이 제공한`,
+
+9:`indicative|[형] ~을 나타내는, 시사하는|be indicative of ~을 나타내다, 시사하다
+advanced|[형] 진보한; 고급의, 상급의|technically advanced 기술적으로 진보한 · an advanced degree 상급 학위(석, 박사 학위)
+closely|[부] 밀접하게, 면밀히, 긴밀하게|closely monitor 면밀히 지켜보다 · work closely with ~와 긴밀히 협력하다
+deliver|[동] (연설, 강연 등을) 하다; 배달하다|deliver a presentation 프레젠테이션을 하다
+complaint|[명] 불평, 항의|customer complaints 고객 불만
+caution|[명] 조심, 주의 [동] 경고[주의]를 주다|use caution 조심하다 · caution against ~하지 말라고 경고하다
+authority|[명] 권한, 허가, 당국; 권위자|an authority on ~의 권위자 · delegate authority 권한을 위임하다
+superior|[형] 우수한|superior to ~보다 우수한
+considerably|[부] 상당히, 많이|considerably change 상당히 바뀌다
+completely|[부] 완전히, 전적으로|completely free of charge 완전히 무료인
+committee|[명] 위원회|a hiring committee 채용 위원회
+apologize|[동] 사과하다|apologize for ~에 대해 사과하다
+specialize|[동] 전문으로 하다|specialize in online marketing 온라인 마케팅을 전문으로 하다
+tenant|[명] 세입자, 임차인 (landlord 집주인)|the previous tenant 이전 세입자
+occasion|[명] (특정한) 때, 경우, 행사|a special occasion 특별한 날[행사]
+generous|[형] 후한, 너그러운, 관대한|a generous donation 후한 기부
+enhance|[동] 향상시키다, 강화시키다, 높이다|enhance flavors 맛을 향상시키다
+convert|[동] 전환시키다, 변환하다|convert (A) into B (A를) B로 전환하다
+examine|[동] 조사하다, 검사하다|examine potential benefits 잠재적 이득을 조사하다
+headquarters|[명] 본사 (= main office, head office)|report to headquarters 본사에 보고하다
+thoroughly|[부] 철저히, 대단히|thoroughly wash 철저히[꼼꼼하게] 씻다
+automatically|[부] 자동으로|shut off automatically 자동으로 차단되다
+warranty|[명] 보증(서), 보증 기간|under warranty 보증 기간 중인
+spacious|[형] 넓은|a spacious room 넓은 방
+various|[형] 다양한|various options 다양한 옵션
+prohibit|[동] 금지하다|prohibit A from -ing A가 ~하는 것을 금지하다
+outstanding|[형] 뛰어난; 아직 처리되지 않은|outstanding achievements 뛰어난 업적 · an outstanding debt 아직 청산하지 못한 빚
+security|[명] 보안|a security guard 보안 요원
+malfunction|[명] 오작동 [동] 오작동하다|malfunctioning equipment 오작동하는 기기
+absolutely|[부] 전적으로, 틀림없이, 굉장히|I'm absolutely thrilled with his idea. 나는 그의 아이디어에 굉장히 감동했다.
+explicitly|[부] 명백하게, 분명하게|explicitly state 명백하게 명시하다
+shift|[동] 옮기다, 이동하다 [명] 교대근무 (시간), 변화|the morning shift 오전 근무`,
+
+10:`waive|[동] (권리 등을) 포기하다, 면제하다|Admission fees will be waived. 입장료는 면제될 것입니다.
+consent|[동] 동의하다 [명] 동의, 합의|without one's consent ~의 동의 없이 · consent to ~에 동의하다
+transportation|[명] 교통, 수송|public transportation 대중교통
+adjacent|[형] 인접한, 가까운|adjacent to ~에 인접한
+effective|[형] 효과적인; 시행되는, 발효되는|effective March 8 3월 8일부터 시행되는
+primarily|[부] 대개, 주로|The café appeals primarily to people in their 20s. 그 카페는 주로 20대의 관심을 끌고 있다.
+increasingly|[부] 점점 더, 더욱 더|increasingly popular 점점 더 인기가 있는
+return|[명] 반납, 반품 [동] 반납하다, 돌아오다|accept returns 반품을 받다 · return to ~로 돌아가다
+inventory|[명] 재고; 물품 목록|take inventory 재고 조사하다
+accommodate|[동] (사람을) 수용하다; (요구 등에) 부응하다|accommodate 100 people 100명을 수용하다 · accommodate one's needs ~의 요구[기대]에 부응하다
+flexible|[형] 융통성 있는, 유연한|flexible work shifts 유연 근무제
+progress|[명] 진척, 진행 [동] 진전을 보이다|in progress 진행 중인
+award|[동] 수여하다 [명] 상|win an award 상을 타다
+publicity|[명] 홍보 (publicize 홍보하다, 광고하다)|get publicity 인기를 얻다
+guarantee|[동] 보장하다 [명] 보증, 담보|guarantee the privacy 사생활을 보장하다
+affect|[동] 영향을 미치다|affect favorably 긍정적인 영향을 미치다
+request|[동] 요청하다 [명] 요청(서)|a vacation request 휴가 요청서
+initiative|[명] 주도권, 계획, 결단력|take initiative 주도하다
+noticeable|[형] 눈에 띄는, 현저한|a noticeable increase 눈에 띄는 증가
+designated|[형] 지정된|a designated space 지정된 장소
+satisfied|[형] 만족한|be satisfied with ~에 만족하다
+previously|[부] 이전에|previously purchased 이전에 구매한
+slightly|[부] 약간|slightly decrease 약간 감소하다
+rapidly|[부] 빠르게|grow rapidly 빠르게 성장하다
+retire|[동] 은퇴하다|retire as of next month 다음 달부로 은퇴하다
+select|[동] 선택하다 [형] 엄선된|randomly select 무작위로 선택하다
+influence|[명] 영향, 영향력 [동] 영향을 미치다|influence on ~에 미치는 영향
+shred|[동] 잘게 자르다, 갈기갈기 찢다, 파기하다|shred a document 문서를 파기하다
+rush|[동] 급히 움직이다, 서두르다 [명] 혼잡, 분주함|in a rush 아주 바쁜, 서두르는, 급한
+patron|[명] 고객, 후원자|a library patron 도서관 이용객 · an anonymous patron 익명의 후원자
+remind|[동] 상기시키다|remind A of A에게 ~을 상기시키다 · remind A to V A에게 ~할 것을 상기시키다 · remind A that S+V A에게 ~라는 것을 상기시키다
+workload|[명] 업무량|His workload has increased. 그의 업무량은 증가했다.`,
+
+11:`maintenance|[명] 유지, 보수|routine maintenance 정기 보수
+alternative|[명] 대안 [형] 대안이 되는|an alternative to ~의 대안
+restore|[동] 복구하다, 복원하다|restore the historical building 역사적 건물을 복원하다
+ongoing|[형] 진행 중인, 현재 계속 하고 있는|ongoing support 계속되는 지원
+securely|[부] 안전하게, 단단히|securely fasten 단단히 고정시키다
+unexpectedly|[부] 예기치 못하게, 뜻밖에|unexpectedly high sales numbers 뜻밖에 높은 매출
+schedule|[명] 일정 [동] 일정을 잡다|be scheduled to V ~할 예정이다
+assembly|[명] 의회, 집회; 조립|assembly line workers (생산) 조립 라인 직원들
+correct|[형] 정확한 [동] 정정하다, 수정하다|correct information 정확한 정보 · correct an error 오류를 정정하다
+outdated|[형] 구식인, 낡은, 시대에 뒤처진|an outdated policy 오래된 정책
+commute|[명] 통근 [동] 통근하다, 출퇴근하다|commute by bus 버스로 통근하다
+individual|[형] 개인의, 각각의 [명] 개인|individual respondents 각각의 응답자들
+eliminate|[동] 제거하다, 탈락시키다|eliminate the need to V ~할 필요성을 없애다
+solution|[명] 해결책; 용액|a solution to ~의 해결책 · cleaning solution 세정액
+severely|[부] 심각하게, 사정없이|severely damaged 심하게 손상된
+retain|[동] 유지하다, 보유하다|retain the best engineers 최고의 엔지니어들을 보유하다
+observe|[동] 준수하다, 관찰하다|observe a holiday 휴일을 준수하다
+avoid|[동] 피하다|avoid -ing ~하는 것을 피하다
+prolong|[동] 연장하다|prolong the life 수명을 연장하다
+remote|[형] 먼, 외진, 외딴|a remote location 외진 지역
+appropriate|[형] 적절한, 알맞은|appropriate safety gear 알맞은 안전 장비
+fairly|[부] 매우, 꽤; 공정하게|fairly certain 매우 확신하는
+accomplishment|[명] 업적, 성취|noteworthy accomplishment 주목할 만한 업적
+reference|[명] 참고, 참조, 참고 문헌; 추천서 [동] 참고 표시를 하다|for future reference 나중에 참고할 수 있도록
+willing|[형] 기꺼이 하는|be willing to V 기꺼이 ~하다
+competitive|[형] 경쟁력 있는|competitive prices 경쟁력 있는 가격
+inconvenience|[명] 불편 [동] 불편하게 하다|I apologize for the inconvenience. 불편을 드려 죄송합니다.
+task|[명] 일, 과제 [동] ~에게 과제를 맡기다|perform a task 업무를 수행하다 · be tasked with ~을 하는 업무를 맡다
+publication|[명] 인쇄물, 출판물|a monthly publication 월간지
+concern|[명] 걱정, 관심사 [동] 걱정시키다; 관련이 있다|be concerned about ~에 대해 걱정하다
+grateful|[형] 감사하는, 고마워하는|be grateful for ~에 감사하다
+distinguish|[동] 구별하다|distinguish between A and B A와 B를 구별하다`,
+
+12:`sensitive|[형] 민감한, 세심한; (정보 등이) 민감한, 기밀의|a sensitive document 민감한[기밀] 문서
+delighted|[형] 기쁜 (= pleased)|be delighted with ~에 기쁘다
+timely|[형] 시기적절한, 때에 맞는|in a timely manner 제시간에, 시기 적절하게
+urgent|[형] 긴급한, 시급한|an urgent matter 시급한 사안
+definitely|[부] 분명히, 확실히|definitely wrong 확실히 잘못된
+precisely|[부] 정확하게 (형 precise 정확한)|express precisely 정확하게 표현하다
+respectively|[부] 각각|$30 and $55 respectively 각각 30달러와 55달러
+banquet|[명] 연회|an awards banquet 시상식 연회
+confirm|[동] 확인하다, 확정하다 (명 confirmation 확인, 확정)|confirm an appointment 약속을 확정하다
+stop by|[동] 들르다, 방문하다|I'll stop by your office. 저는 당신의 사무실에 들를 거예요.
+discontinue|[동] 중단하다|This model has been discontinued. 이 모델은 생산이 중단되었다.
+last|[형] 마지막의; 지난 [동] 계속하다, 지속되다 (형 lasting 지속적인)|a lasting effect 지속적인 효과
+strategically|[부] 전략적으로|strategically located 전략적으로 위치된
+unusually|[부] 대단히, 매우, 평소와 달리|unusually high temperature 매우 높은 기온
+especially|[부] 특히, 특별히|be designed especially for 특별히 ~용으로 고안되다
+carefully|[부] 신중하게, 조심스럽게|carefully review the contract 신중하게 계약서를 검토하다
+undergo|[동] 겪다, ~을 경험하다, 받다|undergo renovations 보수를 받다
+accompany|[동] 동행하다, 동반하다|accompanied by ~이 동반된
+congestion|[명] 혼잡|traffic congestion 교통 혼잡
+risk|[명] 위험 [동] ~의 위험을 무릅쓰다|at risk 위험에 처한 · take a risk 위험을 감수하다
+convinced|[형] (사람이) 확신하는|be convinced of ~을 확신하다
+consecutive|[형] 연속적인|three consecutive weeks 연속 3주
+evenly|[부] 고르게, 균등하게|evenly distribute 고르게 나누다
+punctually|[부] 시간을 엄수하여|arrive punctually 시간을 엄수해서 도착하다
+charge|[명] 요금 [동] 청구하다|at no extra charge 추가 요금 없이 · be charged $100 100달러가 청구되다
+reception|[명] 연회; 접수; 반응, 환영; 수신 상태|poor reception 형편없는 수신 상태
+install|[동] 설치하다 (명 installation 설치)|install a projector 프로젝터를 설치하다
+restrict|[동] 제한하다, 한정하다|be restricted to V ~하도록 제한되다
+summarize|[동] 요약하다 (명 summary 요약, 개요)|summarize the results of the survey 설문 조사 결과를 요약하다
+historic|[형] 역사적인, 역사적으로 중요한|a historic building 역사적인 건물
+commence|[동] 시작되다, 시작하다|commence with breakfast 아침식사로 시작하다
+sufficient|[형] 충분한|sufficient time and money 충분한 시간과 돈`,
+
+13:`representative|[형] 대표하는, 나타내는 [명] 대표, 대리인|a sales representative 판매 대리인, 영업 담당자
+book|[동] 예약하다 [명] 책|book a table 테이블을 예약하다
+departure|[명] 출발; 사임, 퇴임|intended departure 예정된 출발
+overdue|[형] 연체된, 기한이 지난|an overdue charge 연체료
+diverse|[형] 다양한|diverse needs of customers 소비자의 다양한 욕구
+suitable|[형] 적합한, 알맞은|suitable for ~에 적합한
+markedly|[부] 현저히, 눈에 띄게|markedly increase 눈에 띄게 증가하다
+hardly|[부] 거의 ~않는|hardly use 거의 사용하지 않다
+available|[형] 이용 가능한, 사용 가능한|It is available for a limited time. 그것은 한정된 시간 동안 이용 가능하다.
+challenging|[형] 힘든, 어려운|a challenging job 힘든 일
+expand|[동] 확대하다, 확장하다|expand its product line 제품군을 늘리다
+reward|[명] 보상, 사례금 [동] 보상하다|reward A with B A에게 B로 보상해주다
+explain|[동] 설명하다 (명 explanation 설명)|explain a new project 새 프로젝트를 설명하다
+accidentally|[부] 실수로, 우연히, 뜻하지 않게|accidentally delete his number 실수로 그의 번호를 삭제하다
+briefly|[부] 잠시, 간단히|briefly review the memo 간단히 메모를 검토하다
+prefer|[동] 선호하다|prefer A to[over] B B보다 A를 선호하다
+transfer|[동] 전근 가다, 옮기다 [명] 전근, 환승|transfer to a branch office 지사로 전근가다
+recommend|[동] 추천하다|recommend A to V A에게 ~하라고 추천하다
+raise|[동] 올리다, 인상하다 [명] 인상|(pay) raise 임금 인상
+certificate|[명] 자격증, 증명서|a gift certificate 상품권
+capacity|[명] 수용력; 역량, 능력; 역할|storage capacity 저장 용량
+confusing|[형] 혼란스러운, 헷갈리는|confusing instructions 혼란스러운 지시사항
+annually|[부] 연마다, 일년에 한 번|update annually 해마다 갱신하다
+frequently|[부] 자주, 빈번히|frequently asked questions(FAQ) 자주 묻는 질문
+submit|[동] 제출하다 (= hand in, turn in)|submit a report 보고서를 제출하다
+candidate|[명] 지원자, 후보자|an attractive candidate 매력적인 후보자
+compliment|[동] 칭찬하다 [명] 칭찬|compliment A on B B에 대해 A를 칭찬하다
+decline|[동] (자동사) 감소하다; (타동사) 거절하다|decline an offer 제안을 거절하다
+endorse|[동] 지지하다, 홍보하다|endorse a new makeup line 새 메이크업 라인을 홍보하다
+exhibit|[동] 전시하다, 보이다, 드러내다 [명] 전시회|a featured exhibit 특별 전시
+response|[명] 대답, 반응|favorable response 긍정적인 반응
+atmosphere|[명] 분위기; 공기, 대기|an enjoyable atmosphere 즐거운 분위기`,
+
+14:`interact|[동] 소통하다, 상호작용하다|interact with ~와 소통하다
+consist|[동] 구성되다|consist of ~로 구성되다
+vendor|[명] 상인, 노점상, 판매 회사|a local vendor 현지 판매상
+decision|[명] 결정|make a decision 결정하다 · a decision to V ~할 결정
+phase|[명] 단계|a final phase 최종 단계
+beneficial|[형] 도움이 되는, 득이 되는|mutually beneficial 상호 간에 득이 되는
+stable|[형] 안정적인|financially stable 재정적으로 안정적인
+overwhelmingly|[부] 압도적으로|overwhelmingly in favor of 압도적으로 ~을 찬성[지지]하는
+virtually|[부] 사실상, 가상으로|be virtually identical to 사실상 ~와 동일하다
+firmly|[부] 확고하게, 단단히|firmly believe 확고하게 믿다
+skilled|[형] 숙련된, 노련한|be skilled in[at] ~에 숙련되다
+detailed|[형] 자세한, 상세한|detailed information 자세한 정보
+responsive|[형] 즉각 반응하는, 대응하는|be responsive to ~에 즉각 대응하다, ~에 빠른 반응을 보이다
+personnel|[명] 직원들; 인사과|personnel department 인사부 (= human resources department)
+dispose|[동] 제거하다, 없애다|dispose of ~을 제거하다
+productivity|[명] 생산성, 능률|enhance productivity 생산성을 향상시키다
+due|[형] ~하기로 되어 있는, 예정된 [명] 회비, 요금|be due to V ~할 예정이다 · membership dues 회원비
+dedicated|[형] 전념하는, 헌신적인; ~ 전용의|be dedicated to ~에 전념하다
+solely|[부] 오로지, 단지|focus solely on 오로지 ~에만 집중하다
+clearly|[부] 분명히, 또렷하게, 확실히|clearly understand 확실히 이해하다
+consult|[동] 상담[상의]하다, 참고하다|consult a manual 매뉴얼을 참고하다
+local|[형] 지역의 [명] 지역 주민, 현지인|a local farm 지역 농장
+expire|[동] (자동사) 만료되다, 만기되다 (명 expiration 만기, 만료)|The warranty has expired. 품질 보증 기간이 만료되었다.
+extension|[명] 연장, 확대; 내선번호|a deadline extension 마감일 연장
+seasonal|[형] 계절적인, 어느 계절에 한정된|seasonal fruits 제철 과일
+disposable|[형] 일회용의|disposable gloves 일회용 장갑
+preferably|[부] 가급적, 될 수 있는 한|preferably Saturday or Sunday 가급적 토요일이나 일요일
+simultaneously|[부] 동시에|simultaneously handle tasks 작업을 동시에 처리하다
+review|[동] 검토하다, 평가하다 [명] 검토, 논평, 비평, 후기|review the financial report 재정 보고서를 검토하다
+allocate|[동] 할당하다, 배분하다|allocate more funds 더 많은 자금을 할당하다
+pollution|[명] 오염, 공해|noise pollution 소음 공해
+unprecedented|[형] 전례없는, 유례없는|unprecedented increase in sales 유례없는 매출 성장`,
+
+15:`aware|[형] 알고 있는, 의식하고 있는|be aware of ~을 알고 있다 · be aware that S+V ~이라는 것을 알고 있다
+precaution|[명] 예방 조치, 예방 수단|take precautions 예방 조치를 취하다 · safety precautions 안전 예방 조치
+reluctant|[형] 꺼리는, 주저하는|be reluctant to V ~하기를 주저하다
+adversely|[부] 불리하게, 안 좋게|adversely affect 안 좋은 영향을 주다
+drastically|[부] 급격하게|drastically increase 급격하게 증가하다
+temporarily|[부] 일시적으로|temporarily close 일시적으로 닫다
+invoice|[명] 송장, 청구서 [동] 청구서를 보내다|a credit card invoice 신용 카드 청구서
+branch|[명] 지사, 분점; 나뭇가지|new branch offices 새 지사 사무실들
+lend|[동] 빌려주다 (반 borrow 빌리다)|lend her the money 그녀에게 돈을 빌려주다
+survey|[명] 설문 조사 [동] 설문 조사를 하다|survey results 설문 조사 결과
+issue|[명] 문제; (잡지의) 호; 발행(물) [동] 발표하다, 발부하다|the April issue of Stellar 〈스텔라〉 잡지 4월호 · issue a passport 여권을 발부하다
+domestic|[형] 국내의, 가정적인|a domestic flight 국내선
+expense|[명] 비용, 경비, 돈|travel expenses 여행 경비
+limit|[명] 제한, 한도 [동] 제한하다, 한정하다|a word limit 글자 수 제한 · be limited to ~로 한정되다
+interrupt|[동] 방해하다, 중단시키다 (명 interruption 방해, 중단)|temporarily interrupt 일시 중단하다
+receipt|[명] (가산) 영수증, (불가산) 수령, 수취|upon receipt 수령하자마자
+amenity|[명] 편의시설; 호텔에서 제공되는 물품|community amenities 커뮤니티 편의시설
+exempt|[형] 면제되는|be exempt from ~이 면제되다
+routinely|[부] 일상적으로, 규칙적으로|routinely check 규칙적으로 점검하다
+extremely|[부] 극도로, 매우|extremely worried 매우 걱정하는
+deal|[명] 거래, 계약, 합의 [동] 거래하다, 다루다|a special deal 특가 상품 · deal with ~을 다루다, 처리하다
+qualified|[형] 자격을 갖춘|highly qualified 매우 자격을 갖춘 · qualified for ~에 자격을 갖춘
+demonstrate|[동] 보여주다, 설명하다, 시연하다|demonstrate skills 기술을 보여주다
+latest|[형] (가장) 최근의, 최신의|the latest version 가장 최신 버전
+audience|[명] 관객, 청중, 시청자|address the audience 청중에게 연설하다
+conclude|[동] 끝내다, 결론을 내리다|conclude with ~으로 끝내다 · conclude that S+V ~이라는 결론을 내리다
+protect|[동] 보호하다|protect nature 자연을 보호하다
+accountable|[형] 책임이 있는|be accountable for ~에 책임이 있다
+accordingly|[부] 그에 맞춰, 그런 이유로, 따라서|plan accordingly 그에 맞춰 계획을 세우다
+favorably|[부] 호의적으로, 유리하게|favorably respond 호의적으로 반응하다
+city council|[명] 시 의회|a city council election 시 의회 선거
+prescription|[명] 처방(전), 처방약|fill a prescription 처방약을 조제하다`,
+
+16:`informative|[형] 유익한|an informative presentation 유익한 프레젠테이션
+subject|[형] 받기 쉬운; 조건으로 하는 [명] 주제; 과목|be subject to ~ 받기 쉽다, ~의 대상이 되다, ~을 조건으로 하다
+persistently|[부] 끈질기게, 집요하게|persistently demand 끈질기게 요구하다
+focus|[동] 중점을 두다, 초점을 맞추다 [명] 초점, 주목|focus on ~에 중점을 두다 · focus A on B A를 B에 집중시키다
+outline|[명] 개요, 요점 [동] ~의 요점을 말하다|an outline of a plan 계획의 요점
+disclose|[동] 폭로하다, 밝히다|disclose the details 세부 사항을 밝히다
+strive|[동] 분투하다, 노력하다|strive for ~을 위해 노력하다 · strive to V ~하려고 노력하다
+insight|[명] 통찰력|insight into ~에 대한 통찰력
+outcome|[명] 결과|an anticipated outcome 예상되는 결과
+likely|[형] ~할 것 같은, 그럴듯한 [부] 아마|be likely to V ~할 가능성이 있다 · a likely candidate 유력한 후보자
+inadvertently|[부] 무심코, 우연히|inadvertently omit 무심코 빠트리다
+efficiently|[부] 효율적으로, 능률적으로|efficiently manage 효율적으로 관리하다
+ultimately|[부] 궁극적으로, 결국|ultimately lead to 결국 ~으로 이어지다
+project|[명] 프로젝트, 과제 [동] 예상하다, 추정하다 (명 projection 예상, 추정)|a rail extension project 철로 확장 공사
+certified|[형] 공인의, 보증된, 증명된|a certified engineer 공인 엔지니어
+overtime|[명] 초과근무|work overtime 초과근무를 하다
+catering|[명] 음식 공급(업)|a catering service 출장 요리 서비스
+nominate|[동] (후보자로) 지명하다, 임명하다|nominate a candidate 후보자를 지명하다
+device|[명] 장치, 기구|an electronic device 전자 기기[제품]
+familiar|[형] 익숙한, 친숙한, 잘 아는|be familiar with ~을 잘 알고 있다
+passenger|[명] 승객|Passengers are boarding a bus. 승객들이 버스에 탑승하고 있다.
+possess|[동] 소유하다, 소지하다|possess skills 기술을 보유하다
+critical|[형] 대단히 중요한; 비판적인; 위태로운|a critical comment 비판적인 의견
+alternate|[형] 대신의, 대안의 [동] 교대로 하다, 번갈아 하다|an alternate route 대체 도로, 우회로
+ambitious|[형] 야심 찬, 야망에 찬|an ambitious plan 야심 찬 계획
+feasible|[형] 실행 가능한|a feasible strategy 실행 가능한 전략
+bulk order|[명] 대량 주문|bulk order price 대량 주문 가격
+reasonably|[부] 합리적으로|reasonably priced 합리적인 가격의
+feature|[동] ~을 특징으로 삼다; ~을 특집 기사로 다루다 [명] 특징, 특성; 특집 기사|feature various plants 다양한 화초를 특징으로 하다 · the most impressive feature 가장 인상적인 특징
+report|[동] 보고하다, 알리다, 보도하다 [명] 보도, 보고서|report an accident 사고를 보고[보도]하다 · report to ~에게 보고하다, ~의 지시를 받다
+experiment|[명] 실험, 시험 [동] 실험하다|throughout the experiment 실험 내내
+introductory|[형] 소개용의, 서문의, 입문자의|an introductory course 입문 강좌`,
+
+17:`expressly|[부] 분명히, 특별히|expressly state that S+V 분명히 ~라고 명시하다 · used expressly for 특별히 ~ 용도로 사용되는
+necessarily|[부] 반드시, 불가피하게, 필연적으로|not ~ necessarily reflect 반드시 ~을 반영하는 것은 아니다
+suggest|[동] 제안하다; 암시하다, 시사하다|suggest -ing ~할 것을 제안하다 · be suggested about ~에 대해 암시되다
+directory|[명] 명단, 목록, 안내도|an employee directory 직원 명부 · a building directory 건물(층별) 안내도
+suspend|[동] 매달다, 걸다; 중단하다, 유보하다|suspend production 생산을 중단하다
+react|[동] 반응하다|react to ~에 반응하다
+achieve|[동] 성취하다, 이루다, 달성하다|achieve a goal 목표를 이루다
+withdraw|[동] 철수하다, 철회하다, 탈퇴하다, 출금하다|withdraw from the organization 조직에서 탈퇴하다
+strategy|[명] 전략|a strategy meeting 전략 회의
+term|[명] 기간, 임기, 계약조건, 용어|during his term 그의 임기 동안 · terms and conditions (계약 등의) 조건, 약관
+measure|[명] 조치, 양(정도) [동] 측정하다, 판단하다|safety measures 안전 조치
+widespread|[형] 널리 퍼진, 광범위한|widespread use 광범위한 사용
+ample|[형] 충분한, 많은|an ample space 충분한 공간
+moderately|[부] 적당히, 알맞게|moderately priced 적당한 가격의
+partially|[부] 부분적으로|partially block 부분적으로 막다
+mistakenly|[부] 실수로|mistakenly erase 실수로 지우다
+ask for|[동] ~을 요청하다|ask for help 도움을 요청하다
+cover|[동] 다루다, 취재하다, 대신하다 [명] 덮개, (보험의) 보장, 표지, 보도|cover various topics 다양한 주제를 다루다 · media coverage 언론 보도
+misplace|[동] 제자리에 두지 않다 (그래서 찾지 못하다)|misplace a key 열쇠를 제자리에 두지 않다
+refundable|[형] 환불 가능한|fully refundable 전액 환불 가능한
+anniversary|[명] 기념일|mark an anniversary 기념일을 축하하다
+attention|[명] 주의, 주목, 관심|attention to detail 세부적인 것에 대한 주의 · pay attention to ~에 주의하다
+market|[명] 시장, 수요지 [동] 거래하다, 팔다, 내놓다|on the market 시장[시중]에 나와 있는
+confident|[형] 자신감 있는, 확신하는|a confident attitude 자신감 있는 태도
+belongings|[명] 소지품, 소유물|personal belongings 개인 소지품
+paperwork|[명] 서류 작업, 문서 업무, 서류|fill out paperwork 서류를 작성하다
+input|[명] 의견, 조언, 입력, 투입|input from the public 대중들의 의견
+simplify|[동] 간소화하다|simplify a process 과정을 간소화하다
+telecommute|[동] 재택 근무하다 (= work from home)|a telecommute schedule 재택 근무 일정
+well received|[형] 호평을 받은|well received by many critics 많은 비평가들의 호평을 받은
+component|[명] 부품, (구성) 요소|a central component 핵심 구성 요소
+reflect|[동] 반영하다, 반사하다; 심사숙고하다|reflect a new discount 새로운 할인율을 반영하다`,
+
+18:`analyze|[동] 분석하다 (명 analysis 분석)|analyze results 결과를 분석하다
+fluctuate|[동] 변동하다, 수시로 변하다|fluctuate rapidly 빠르게 변동하다
+discard|[동] 버리다, 폐기하다|discard some papers 종이를 버리다
+knowledgeable|[형] 박식한, 아는 것이 많은|be knowledgeable about ~에 대해 아는 것이 많다
+confidential|[형] 기밀의, 비밀의|a confidential document 기밀 문서
+hospitality|[명] 환대, 접대, 대접|hospitality industry (호텔, 식당 등의) 서비스업
+multiple|[형] 많은, 다수의|multiple locations 여러 장소
+randomly|[부] 무작위로|randomly choose 무작위로 고르다
+landscaping|[명] 조경|a landscaping company 조경 회사
+public|[형] 대중의, 일반인의, 공공의 [명] 대중, 일반인들|open to the public 일반에 공개되는
+acknowledge|[동] 인정하다; 감사를 표하다; 받았음을 알리다|acknowledge receipt of ~을 수령했음을 알리다 · acknowledge everyone 모두에게 감사를 표하다
+proceeds|[명] 수익금|The proceeds will go toward ~. 그 수익금은 ~에 쓰일 것이다.
+demand|[명] 요구, 수요 [동] 요구하다|high demand 많은 수요
+overview|[명] 개관, 개요, 요약|a basic overview 대략적인 개요
+motivated|[형] 의욕적인, 열의가 있는, 동기 부여된|a motivated individual 의욕적인 사람
+densely|[부] 빽빽하게, 밀집하여|densely populated 인구가 밀집한
+officially|[부] 공식적으로|officially open 공식적으로 문을 열다
+order|[명] 주문, 순서 [동] 주문하다, 명령하다|place an order 주문하다 · in alphabetical order 알파벳 순으로
+account|[명] 계좌, 계정; 단골, 거래처; 이야기 [동] 설명하다|account for ~을 설명하다, (비율을) 차지하다
+underway|[형] 진행 중인|work is underway 작업이 진행 중이다
+attach|[동] 첨부하다, 붙이다|attach A to B A를 B에 붙이다
+determine|[동] 알아내다, 결정하다|determine the cause 원인을 알아내다 · determine whether ~할지 말지 결정하다
+invest|[동] 투자하다|invest in ~에 투자하다
+conflict|[명] 갈등, 충돌 [동] 상충하다|a scheduling conflict 일정 충돌[겹침] · conflicting opinions 상충된 견해
+proximity|[명] 가까움, 근접|proximity to ~에 근접함
+promising|[형] 유망한, 장래성 있는, 가능성이 높은, 기대되는|a promising player 유망한 선수 · a promising field 유망한 분야
+complicated|[형] 복잡한|a complicated process 복잡한 절차
+anonymously|[부] 익명으로|anonymously fill out a survey 익명으로 설문조사를 작성하다
+actively|[부] 적극적으로, 활발히|actively seek 적극적으로 찾다
+own|[형] ~ 자신의 [동] 소유하다|my own idea 나 자신의 생각 · own a company 회사를 소유하다
+expose|[동] 노출시키다, 드러내다, 폭로하다|expose A to B A를 B에 노출시키다
+resistant|[형] 잘 견디는, 저항력 있는|resistant to ~에 강한, ~에 내성이 있는`,
+
+19:`existing|[형] 기존의, 이미 있는|existing customers 기존 고객들
+preliminary|[형] 예비의, 사전의|a preliminary plan 사전 계획
+tightly|[부] 꽉, 단단히|tightly closed 꽉 닫힌, 단단히 닫힌
+identification|[명] 신분증, 신원 확인|present one's identification 신분증을 제시하다
+loan|[명] 대출, 대여 [동] 빌려주다, 대여하다|on loan 대여 중인, 빌린
+implement|[동] 시행하다, 실행하다|implement a program 프로그램을 시행하다
+boost|[동] 북돋우다, 증진시키다, 높이다 [명] 상승, 증가, 격려, 부양책|boost tourism 관광업을 증진시키다
+excessive|[형] 과도한|excessive waste 과도한 폐기물
+optimistic|[형] 낙관적인, 긍정적인|optimistic about ~에 대해 낙관하는
+independently|[부] 독립하여, 자립하여|work independently 독립적으로[독자적으로] 일하다
+repair|[동] 수리하다 [명] 수리|beyond repair 수리가 불가능한
+attendance|[명] 참석, 참석자 수 (명 attendee 참석자)|in attendance 참석한
+direct|[형] 직접적인, 직통의 [동] 지시하다, 안내하다, 명령하다, 보내다|a direct flight 직항 · direct A to B A를 B로 안내하다[보내다]
+host|[동] 주최하다, 진행하다 [명] 주최자, 진행자, 주인|host a party 파티를 주최하다
+appreciate|[동] 감사하다, 감상하다, 인정하다|I really appreciate it. 정말 감사해요.
+merchandise|[명] (불가산) 상품, 물품|damaged merchandise 손상된 제품
+instruct|[동] 지시하다, 가르치다 (명 instructor 강사, 지도자)|be instructed to V ~하라는 지시를 받다
+seek|[동] 찾다, 구하다, 모색하다|seek an employee 직원을 구하다
+handle|[동] 다루다, 처리하다, (손으로) 만지다|handle reservations 예약을 처리하다
+emerge|[동] (자동사) 떠오르다, 부상하다, 나타나다|emerge as ~으로 부상하다
+resign|[동] 사퇴하다, 사임하다, 물러나다 (명 resignation 사퇴, 사임)|resign as a vice president 부회장직을 사임하다
+fine|[형] 좋은 [명] 벌금|impose a fine 벌금을 부과하다
+inclement|[형] 혹독한|inclement weather 혹독한 날씨
+artificial|[형] 인공의, 인위적인|artificial grass 인공 잔디
+skillfully|[부] 능숙하게, 솜씨 있게|skillfully operate 능숙하게 작동하다
+property|[명] 재산, 소유물, 부동산, 건물|a property manager 부동산 관리자
+straightforward|[형] 간단한, 복잡하지 않은, 솔직한|Setup is straightforward. 설치는 간단해요.
+continually|[부] 끊임없이, 계속|continually research 끊임없이 연구하다
+recipe|[명] 조리법, 요리법|a traditional recipe 전통 조리법
+share|[동] 공유하다 [명] 몫, 지분|share an office with 사무실을 ~와 공유하다 · a market share 시장 점유율
+reminder|[명] 상기시켜 주는 것, 독촉장|This is a reminder that S+V. ~을 다시 한번 알려 드립니다.
+private|[형] 개인 소유의, 비공개의, 사적인|in private 비공개로, 비공식적으로`,
+
+20:`presence|[명] 참석, 출석; 존재감, 영향력|online presence 온라인상에서의 존재감[영향력]
+rare|[형] 드문, 희귀한, 보기 힘든 (부 rarely 거의 ~ 않는)|a rare book 희귀 서적
+attraction|[명] 명소, 명물, 매력|a tourist attraction 관광 명소
+encounter|[동] 맞닥뜨리다, 마주치다|encounter a problem 문제를 맞닥뜨리다
+facilitate|[동] 용이하게 하다, 쉽게 하다|facilitate installation 설치를 쉽게 하다
+entrance|[명] 입구, 문|a rear entrance 뒷문, 후문
+considerate|[형] 사려 깊은, 배려하는|be considerate of ~을 배려하다
+customarily|[부] 습관적으로, 관례상, 통상|customarily receive 10% discount 통상 10퍼센트 할인을 받는다
+draft|[명] 초고, 초안, 밑그림, 도면, 도안 [동] 초안을 작성하다|a first draft of the speech 연설문 초고
+manage|[동] 관리하다, 운영하다; (어떻게든) ~해내다, 간신히 해내다|manage resources 자원을 관리하다
+commend|[동] 칭찬하다, 추천하다 (명 commendation 칭찬)|commend for an effort 노력에 대해 칭찬하다
+broadly|[부] 대체로, 대략적으로; 광범위하게, 훨씬|broadly similar 대체로 비슷한
+stroll|[명] 산책, 거닐기 [동] 산책하다, 거닐다|a leisurely stroll 여유로운 산책
+spokesperson|[명] 대변인|a government spokesperson 정부 대변인
+incur|[동] (비용 등을) 발생시키다, 초래하다|expenses incurred 발생된 비용들
+verify|[동] 확인하다, 입증하다|verify one's employment ~의 고용을 확인하다
+participation|[명] 참석 (명 participant 참석자)|Thank you for your participation. 참석해 주셔서 감사합니다.
+diagnosis|[명] 진단 (동 diagnose 진단하다)|an accurate diagnosis 정확한 진단
+effort|[명] 노력; (집단의 조직적인) 활동|in an effort to V ~하기 위해서, ~하기 위한 일환으로
+superb|[형] 최고의, 최상의|superb food 최고의 음식
+similar|[형] 유사한, 비슷한|similar to ~와 유사한
+established|[형] 인정받는, 존경받는|an established company 인정받는 회사(중견 기업)
+momentarily|[부] 곧, 금방, 잠깐|be halted momentarily 잠깐 중단되다
+session|[명] 회의, 회의 시간; 기간, 시간|a training session 훈련 기간
+flyer|[명] 전단지; 비행기 승객|a frequent flyer 항공사 단골 고객
+lower|[형] (비교급) 더 낮은 [동] 낮추다|lower prices 가격을 낮추다
+reject|[동] 거절하다|reject a proposal 제안을 거절하다
+lease|[명] 임대차 계약 [동] 임대하다|a lease agreement 임대 계약
+overseas|[형] 해외의 [부] 해외로|an overseas market 해외 시장
+hazardous|[형] 위험한|a hazardous road 위험한 도로
+abundant|[형] 풍부한, 많은|abundant food 풍부한 음식
+accustomed|[형] 익숙한|be accustomed to ~에 익숙하다`
+};
+
+/* ---------- 데이터 파싱 ---------- */
+const DAYS = {};
+Object.keys(RAW).forEach(k=>{
+  DAYS[k] = RAW[k].trim().split('\n').map(l=>{
+    const p = l.split('|');
+    return {w:p[0].trim(), m:p[1].trim(), e:(p[2]||'').trim()};
+  });
+});
+const DAY_KEYS = Object.keys(DAYS).map(Number).sort((a,b)=>a-b);
+const dayLabel = d => 'Day ' + String(d).padStart(2,'0');
+
+/* ---------- 유틸 ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function meaningHTML(m){
+  return esc(m).replace(/\[(명|동|형|부)\]/g,'<span class="pos" data-p="$1">$1</span>');
+}
+function plainMeaning(m){ return m.replace(/\[[^\]]*\]/g,' ').replace(/\s+/g,' ').trim(); }
+const norm = s => s.toLowerCase().replace(/[\s~\-\.\(\)\[\],;\/·]/g,'');
+
+/* ---------- 저장소 (모르는 단어 / 오답) ---------- */
+const LS = {
+  get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+};
+let starList = LS.get('tv_star', []);
+let wrongMap = LS.get('tv_wrong', {});
+let autoRemove = LS.get('tv_auto', true);
+const saveStar = ()=>LS.set('tv_star', starList);
+const saveWrong = ()=>LS.set('tv_wrong', wrongMap);
+const isStar = w => starList.includes(w);
+const ALL = {};
+DAY_KEYS.forEach(d=>DAYS[d].forEach(it=>{ if(!ALL[it.w]) ALL[it.w] = {...it, day:d}; }));
+const starBtn = w => `<button class="star ${isStar(w)?'on':''}" data-w="${esc(w)}" title="모르는 단어 표시">★</button>`;
+const badgeHTML = w => wrongMap[w] ? `<span class="badge-wrong">오답 ${wrongMap[w]}회</span>` : '';
+function toggleStar(w){
+  const i = starList.indexOf(w);
+  if(i>=0) starList.splice(i,1); else starList.push(w);
+  saveStar();
+}
+
+/* ---------- 탭 ---------- */
+function showTab(t){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on', x.dataset.tab===t));
+  $('#viewVocab').classList.toggle('hidden', t!=='vocab');
+  $('#viewTest').classList.toggle('hidden', t!=='test');
+  $('#viewMine').classList.toggle('hidden', t!=='mine');
+  if(t==='test'){ if(!testItems.length) buildTest(); else renderTestChips(); }
+  if(t==='mine') renderMine();
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('.tab').forEach(b=>{ b.onclick = ()=>showTab(b.dataset.tab); });
+
+/* ---------- 단어장 ---------- */
+let curDay = DAY_KEYS[0];
+let vocabOrder = null; // null = 원래 순서
+function renderVocabChips(){
+  $('#vocabChips').innerHTML = DAY_KEYS.map(d=>
+    `<button class="chip ${d===curDay?'on':''}" data-d="${d}">${dayLabel(d)}</button>`).join('');
+  $('#vocabChips').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{curDay=+c.dataset.d;vocabOrder=null;renderVocab();});
+}
+function renderVocab(){
+  renderVocabChips();
+  const list = vocabOrder || DAYS[curDay];
+  $('#vTitle').textContent = dayLabel(curDay);
+  $('#vCount').textContent = `단어 ${list.length}개` + (vocabOrder?' · 섞은 순서':' · 교재 순서');
+  $('#vocabGrid').innerHTML = list.map((it,i)=>`
+    <div class="wcard">
+      <div class="top"><span class="no">${i+1}</span><span class="w">${esc(it.w)}</span>${badgeHTML(it.w)}${starBtn(it.w)}</div>
+      <div class="mean"><span class="mtext">${meaningHTML(it.m)}</span></div>
+      ${it.e?`<div class="ex">${esc(it.e)}</div>`:''}
+    </div>`).join('');
+  $('#vocabGrid').querySelectorAll('.mean').forEach(m=>m.onclick=()=>m.classList.toggle('show'));
+  $('#prevDay').disabled = curDay===DAY_KEYS[0];
+  $('#nextDay').disabled = curDay===DAY_KEYS[DAY_KEYS.length-1];
+  window.scrollTo({top:0});
+}
+$('#hideMean').onchange = e=>$('#vocabGrid').classList.toggle('hide-mean', e.target.checked);
+$('#hideEx').onchange = e=>$('#vocabGrid').classList.toggle('hide-ex', e.target.checked);
+$('#vocabShuffle').onclick = ()=>{vocabOrder = shuffle(DAYS[curDay]); renderVocab();};
+$('#vocabReset').onclick = ()=>{vocabOrder = null; renderVocab();};
+$('#prevDay').onclick = ()=>{const i=DAY_KEYS.indexOf(curDay); if(i>0){curDay=DAY_KEYS[i-1];vocabOrder=null;renderVocab();}};
+$('#nextDay').onclick = ()=>{const i=DAY_KEYS.indexOf(curDay); if(i<DAY_KEYS.length-1){curDay=DAY_KEYS[i+1];vocabOrder=null;renderVocab();}};
+
+/* ---------- 단어시험 ---------- */
+let testDays = new Set([DAY_KEYS[0]]);
+let testItems = [];
+let graded = false, showAns = false;
+
+let testSpecial = null; // null | 'star' | 'wrong'
+function renderTestChips(){
+  const all = !testSpecial && testDays.size===DAY_KEYS.length;
+  $('#testChips').innerHTML =
+    `<button class="chip ${testSpecial==='star'?'on':''}" data-sp="star">⭐ 모르는 단어 (${starList.length})</button>` +
+    `<button class="chip ${testSpecial==='wrong'?'on':''}" data-sp="wrong">❌ 오답 노트 (${Object.keys(wrongMap).length})</button>` +
+    `<button class="chip ghost" id="chipAll">${all?'전체 해제':'전체 선택'}</button>` +
+    DAY_KEYS.map(d=>`<button class="chip ${(!testSpecial && testDays.has(d))?'on':''}" data-d="${d}">${dayLabel(d)}</button>`).join('');
+  $('#testChips').querySelectorAll('.chip[data-sp]').forEach(c=>c.onclick=()=>{
+    testSpecial = (testSpecial===c.dataset.sp) ? null : c.dataset.sp;
+    buildTest();
+  });
+  $('#chipAll').onclick = ()=>{
+    testSpecial = null;
+    testDays = all ? new Set([curDay]) : new Set(DAY_KEYS);
+    buildTest();
+  };
+  $('#testChips').querySelectorAll('.chip[data-d]').forEach(c=>c.onclick=()=>{
+    const d = +c.dataset.d;
+    if(testSpecial){ testSpecial = null; testDays = new Set([d]); }
+    else if(testDays.has(d)){ if(testDays.size>1) testDays.delete(d); }
+    else testDays.add(d);
+    buildTest();
+  });
+}
+function buildTest(){
+  const pool = [];
+  if(testSpecial){
+    const ws = testSpecial==='star' ? starList : Object.keys(wrongMap);
+    ws.forEach(w=>{ if(ALL[w]) pool.push({...ALL[w]}); });
+  } else {
+    const seen = new Set();
+    DAY_KEYS.filter(d=>testDays.has(d)).forEach(d=>DAYS[d].forEach(it=>{
+      if(!seen.has(it.w)){ seen.add(it.w); pool.push({...it, day:d}); }
+    }));
+  }
+  testItems = shuffle(pool);
+  graded = false; showAns = false;
+  $('#ansBtn').textContent = '👀 정답 보기';
+  renderTest();
+}
+function renderTest(){
+  renderTestChips();
+  const mode = $('#mode').value;
+  const ds = DAY_KEYS.filter(d=>testDays.has(d));
+  const title = testSpecial ? (testSpecial==='star'?'⭐ 모르는 단어':'❌ 오답 노트') : (ds.length===DAY_KEYS.length ? '전체 (Day 01–20)' : ds.map(dayLabel).join(', '));
+  $('#sheetTitle').textContent = `📝 ${title} · 단어시험 ${testItems.length}문제 · ` + (mode==='en2ko'?'영어를 보고 한글 뜻을 쓰세요':'한글 뜻을 보고 영어 단어를 쓰세요');
+  $('#score').textContent = '';
+  if(!testItems.length){ $('#sheetBody').innerHTML = (testSpecial ? '<div class="empty">아직 저장된 단어가 없어요. 단어장에서 ⭐를 누르거나 시험에서 틀려 보세요.</div>' : '<div class="empty">출제할 단어가 없습니다.</div>'); return; }
+  $('#sheetBody').innerHTML = testItems.map((it,i)=>{
+    const prompt = mode==='en2ko'
+      ? `<div class="p">${esc(it.w)}${starBtn(it.w)}</div>`
+      : `<div class="p ko">${meaningHTML(it.m)}${starBtn(it.w)}</div>`;
+    const answer = mode==='en2ko'
+      ? `정답: ${meaningHTML(it.m)}`
+      : `정답: <b>${esc(it.w)}</b>`;
+    return `<div class="q" data-i="${i}">
+      <div class="n">${i+1}</div>${prompt}
+      <div class="in"><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${mode==='en2ko'?'뜻':'영어 단어'}"></div>
+      <div class="res"></div>
+      <div class="ans">${answer}</div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('#sheetBody .q').forEach(q=>{
+    q.querySelector('.res').onclick = ()=>{
+      if(!graded) return;
+      const ok = q.classList.contains('ok');
+      setMark(q, !ok); updateScore(); renderTestChips();
+    };
+    q.querySelector('input').addEventListener('keydown', e=>{
+      if(e.key==='Enter'){
+        e.preventDefault();
+        const next = q.nextElementSibling;
+        if(next) next.querySelector('input').focus();
+      }
+    });
+  });
+}
+function setMark(q, ok){
+  q.classList.remove('ok','ng');
+  q.classList.add(ok?'ok':'ng');
+  q.querySelector('.res').textContent = ok?'O':'X';
+  q.querySelector('.ans').classList.add('on');
+  const w = testItems[+q.dataset.i].w;
+  if(!ok){
+    if(!q._cnt){ wrongMap[w] = (wrongMap[w]||0)+1; q._cnt = true; saveWrong(); }
+  } else if(q._cnt){
+    if(wrongMap[w]){ wrongMap[w] -= 1; if(wrongMap[w]<=0) delete wrongMap[w]; }
+    q._cnt = false; saveWrong();
+  } else if(autoRemove && wrongMap[w]){
+    delete wrongMap[w]; saveWrong();
+  }
+}
+function judge(it, input, mode){
+  const u = norm(input);
+  if(!u) return false;
+  if(mode==='ko2en') return u === norm(it.w);
+  const toks = it.m.replace(/\[[^\]]*\]/g,'|').replace(/\([^)]*\)/g,'')
+    .split(/[|,;\/]/).map(norm).filter(Boolean);
+  return toks.some(t => u===t || (u.length>=2 && t.length>=2 && (t.includes(u) || u.includes(t))));
+}
+function updateScore(){
+  const qs = document.querySelectorAll('#sheetBody .q');
+  const ok = document.querySelectorAll('#sheetBody .q.ok').length;
+  $('#score').textContent = `점수 ${ok} / ${qs.length}  (${Math.round(ok/qs.length*100)}점)`;
+}
+function grade(){
+  const mode = $('#mode').value;
+  document.querySelectorAll('#sheetBody .q').forEach(q=>{
+    const it = testItems[+q.dataset.i];
+    setMark(q, judge(it, q.querySelector('input').value, mode));
+  });
+  graded = true; updateScore(); renderTestChips();
+}
+$('#refresh').onclick = ()=>{ buildTest(); window.scrollTo({top:0}); };
+$('#mode').onchange = ()=>buildTest();
+$('#gradeBtn').onclick = grade;
+$('#ansBtn').onclick = ()=>{
+  showAns = !showAns;
+  document.querySelectorAll('#sheetBody .q .ans').forEach(a=>a.classList.toggle('on', showAns || a.parentElement.classList.contains('ok') || a.parentElement.classList.contains('ng')));
+  $('#ansBtn').textContent = showAns ? '🙈 정답 숨기기' : '👀 정답 보기';
+};
+$('#printBtn').onclick = ()=>window.print();
+
+/* ---------- 내 단어장 ---------- */
+let mineSub = 'star';
+function mineWords(){
+  return mineSub==='star'
+    ? starList.filter(w=>ALL[w]).map(w=>ALL[w])
+    : Object.keys(wrongMap).filter(w=>ALL[w]).sort((a,b)=>wrongMap[b]-wrongMap[a]).map(w=>ALL[w]);
+}
+function renderMineChips(){
+  $('#mineChips').innerHTML =
+    `<button class="chip ${mineSub==='star'?'on':''}" data-s="star">⭐ 모르는 단어 (${starList.length})</button>` +
+    `<button class="chip ${mineSub==='wrong'?'on':''}" data-s="wrong">❌ 오답 노트 (${Object.keys(wrongMap).length})</button>`;
+  $('#mineChips').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{ mineSub=c.dataset.s; renderMine(); });
+}
+function renderMine(){
+  renderMineChips();
+  const list = mineWords();
+  $('#mineGrid').classList.toggle('hide-mean', $('#mineHide').checked);
+  $('#mineGrid').innerHTML = list.length ? list.map(it=>`
+    <div class="wcard">
+      <div class="top"><span class="w">${esc(it.w)}</span><span class="tag">${dayLabel(it.day)}</span>${badgeHTML(it.w)}${starBtn(it.w)}</div>
+      <div class="mean"><span class="mtext">${meaningHTML(it.m)}</span></div>
+      ${it.e?`<div class="ex">${esc(it.e)}</div>`:''}
+      ${mineSub==='wrong'?`<div style="margin-top:8px"><button class="btn sm" data-rmwrong="${esc(it.w)}">✓ 오답 노트에서 삭제</button></div>`:''}
+    </div>`).join('')
+    : `<div class="empty" style="grid-column:1/-1">${mineSub==='star'?'아직 ⭐ 표시한 단어가 없어요. 단어장에서 별을 눌러 보세요.':'오답 노트가 비어 있어요. 시험에서 틀린 단어가 자동으로 쌓입니다.'}</div>`;
+  $('#mineGrid').querySelectorAll('.mean').forEach(m=>m.onclick=()=>m.classList.toggle('show'));
+}
+document.addEventListener('click', e=>{
+  const sb = e.target.closest('.star');
+  if(sb){
+    const w = sb.dataset.w;
+    toggleStar(w);
+    document.querySelectorAll('.star').forEach(x=>{ if(x.dataset.w===w) x.classList.toggle('on', isStar(w)); });
+    renderMineChips();
+    if(!$('#viewTest').classList.contains('hidden')) renderTestChips();
+    return;
+  }
+  const rb = e.target.closest('[data-rmwrong]');
+  if(rb){ delete wrongMap[rb.dataset.rmwrong]; saveWrong(); renderMine(); }
+});
+$('#mineHide').onchange = ()=>$('#mineGrid').classList.toggle('hide-mean', $('#mineHide').checked);
+$('#mineTest').onclick = ()=>{ testSpecial = mineSub; showTab('test'); buildTest(); };
+$('#mineClear').onclick = ()=>{
+  if(!confirm(mineSub==='star' ? '모르는 단어 목록을 모두 비울까요?' : '오답 노트를 모두 비울까요?')) return;
+  if(mineSub==='star'){ starList = []; saveStar(); } else { wrongMap = {}; saveWrong(); }
+  renderMine();
+};
+$('#mineExport').onclick = async ()=>{
+  const t = JSON.stringify({star:starList, wrong:wrongMap});
+  try{ await navigator.clipboard.writeText(t); alert('백업 내용을 복사했어요. 다른 기기의 "백업 복원"에 붙여넣으세요.'); }
+  catch(err){ prompt('아래 내용을 복사하세요', t); }
+};
+$('#mineImport').onclick = ()=>{
+  const t = prompt('백업 내용을 붙여넣으세요');
+  if(!t) return;
+  try{
+    const o = JSON.parse(t);
+    (o.star||[]).forEach(w=>{ if(!starList.includes(w)) starList.push(w); });
+    Object.entries(o.wrong||{}).forEach(([w,n])=>{ wrongMap[w] = Math.max(wrongMap[w]||0, +n||1); });
+    saveStar(); saveWrong(); renderMine(); alert('복원했어요.');
+  }catch(err){ alert('형식이 올바르지 않아요.'); }
+};
+$('#autoRm').checked = autoRemove;
+$('#autoRm').onchange = e=>{ autoRemove = e.target.checked; LS.set('tv_auto', autoRemove); };
+
+renderVocab();
+</script>
+</body>
+</html>
