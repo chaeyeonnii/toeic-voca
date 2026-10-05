@@ -49,6 +49,25 @@ main{max-width:980px;margin:0 auto;padding:14px 14px 60px}
 .pos[data-p="형"]{color:#2e8b57;background:#e8f6ee;border-color:#b3dfc4}
 .pos[data-p="부"]{color:#a1620d;background:#fff3e0;border-color:#f1d29b}
 .pager{display:flex;justify-content:space-between;gap:8px;margin-top:18px}
+.daybtn{border:0;background:none;padding:0;font:inherit;font-size:28px;font-weight:700;color:var(--accent-d);cursor:pointer;display:flex;align-items:center;gap:6px}
+.daybtn::after{content:"▾";font-size:16px;color:var(--sub)}
+.daybtn:hover{color:var(--accent)}
+
+/* Day 선택 화면 */
+#dayPick{position:fixed;inset:0;z-index:900;background:var(--bg);overflow-y:auto;padding:20px 16px 40px}
+html.picking{overflow:hidden}
+#dayPick .inner{max-width:560px;margin:0 auto}
+#dayPick .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+#dayPick h2{margin:0;font-size:22px;color:var(--accent-d)}
+#dayPick .sub{margin:0 0 16px;color:var(--sub);font-size:14px}
+#dayPick .x{border:0;background:none;font-size:26px;line-height:1;color:var(--sub);cursor:pointer;padding:4px 8px}
+.daygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:10px}
+.dcell{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 4px;cursor:pointer;color:var(--ink);text-align:center}
+.dcell:hover{border-color:var(--accent)}
+.dcell b{display:block;font-size:22px;line-height:1.2}
+.dcell small{display:block;color:var(--sub);font-size:12px}
+.dcell.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.dcell.on small{color:rgba(255,255,255,.85)}
 
 /* test */
 .toolbar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--line);margin-bottom:10px}
@@ -87,7 +106,7 @@ select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);backgrou
   .q .ans{grid-column:2 / 4}
 }
 @media print{
-  header,.toolbar .row,.chips,.pager,.tabs{display:none!important}
+  header,.toolbar .row,.chips,.pager,.tabs,#dayPick{display:none!important}
   .toolbar{position:static;border:0}
   body{background:#fff}
 }
@@ -121,6 +140,13 @@ catch(e){ document.documentElement.classList.add('locked'); }
     <div class="err" id="lockErr"></div>
   </form>
 </div>
+<div id="dayPick" hidden role="dialog" aria-labelledby="dayPickTitle">
+  <div class="inner">
+    <div class="head"><h2 id="dayPickTitle">📘 Day 선택</h2><button class="x" id="dayPickClose" aria-label="닫기">✕</button></div>
+    <p class="sub">공부할 Day를 고르세요</p>
+    <div class="daygrid" id="dayGrid"></div>
+  </div>
+</div>
 <header>
   <h1>📘 파워토익 퀵스타트 · 미니 단어장 (Day 01–20)</h1>
   <div class="tabs">
@@ -133,14 +159,13 @@ catch(e){ document.documentElement.classList.add('locked'); }
 <main>
   <!-- 단어장 -->
   <section id="viewVocab">
-    <div class="chips" id="vocabChips"></div>
     <div class="bar">
       <label class="toggle"><input type="checkbox" id="hideMean"> 뜻 가리기 (클릭하면 보임)</label>
       <label class="toggle"><input type="checkbox" id="hideEx"> 예문 숨기기</label>
       <button class="btn" id="vocabShuffle">🔀 이 Day 단어 섞기</button>
       <button class="btn" id="vocabReset">원래 순서</button>
     </div>
-    <div class="daytitle"><h2 id="vTitle"></h2><span id="vCount"></span></div>
+    <div class="daytitle"><h2><button class="daybtn" id="vTitle" title="Day 선택"></button></h2><span id="vCount"></span></div>
     <div class="grid" id="vocabGrid"></div>
     <div class="pager">
       <button class="btn" id="prevDay">← 이전 Day</button>
@@ -913,13 +938,25 @@ document.querySelectorAll('.tab').forEach(b=>{ b.onclick = ()=>showTab(b.dataset
 /* ---------- 단어장 ---------- */
 let curDay = DAY_KEYS[0];
 let vocabOrder = null; // null = 원래 순서
-function renderVocabChips(){
-  $('#vocabChips').innerHTML = DAY_KEYS.map(d=>
-    `<button class="chip ${d===curDay?'on':''}" data-d="${d}">${dayLabel(d)}</button>`).join('');
-  $('#vocabChips').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{curDay=+c.dataset.d;vocabOrder=null;renderVocab();});
+function openDayPick(){
+  $('#dayGrid').innerHTML = DAY_KEYS.map(d=>
+    `<button class="dcell ${d===curDay?'on':''}" data-d="${d}"><small>Day</small><b>${String(d).padStart(2,'0')}</b><small>${DAYS[d].length}단어</small></button>`).join('');
+  $('#dayGrid').querySelectorAll('.dcell').forEach(c=>c.onclick=()=>{
+    curDay = +c.dataset.d; vocabOrder = null;
+    closeDayPick(); showTab('vocab'); renderVocab();
+  });
+  $('#dayPick').hidden = false;
+  document.documentElement.classList.add('picking');
+  $('#dayPick').scrollTop = 0;
 }
+function closeDayPick(){
+  $('#dayPick').hidden = true;
+  document.documentElement.classList.remove('picking');
+}
+$('#dayPickClose').onclick = closeDayPick;
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !$('#dayPick').hidden) closeDayPick(); });
+$('#vTitle').onclick = openDayPick;
 function renderVocab(){
-  renderVocabChips();
   const list = vocabOrder || DAYS[curDay];
   $('#vTitle').textContent = dayLabel(curDay);
   $('#vCount').textContent = `단어 ${list.length}개` + (vocabOrder?' · 섞은 순서':' · 교재 순서');
@@ -1136,6 +1173,7 @@ $('#autoRm').checked = autoRemove;
 $('#autoRm').onchange = e=>{ autoRemove = e.target.checked; LS.set('tv_auto', autoRemove); };
 
 renderVocab();
+openDayPick(); // 처음 열면 Day 선택 화면부터 (잠금 중이면 해제 후 보임)
 </script>
 <script>
 /* 비밀번호 잠금 */
