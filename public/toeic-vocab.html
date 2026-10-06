@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>파워토익 미니 단어장</title>
+<title>토익 미니 단어장</title>
 <style>
 :root{
   --bg:#faf6f3; --card:#fff; --ink:#2b2523; --sub:#7a6e69; --line:#eadfd9;
@@ -160,7 +160,7 @@ catch(e){ document.documentElement.classList.add('locked'); }
     <div class="head"><h2 id="dayPickTitle"></h2><button class="x" id="dayPickClose" aria-label="닫기">✕</button></div>
     <p class="sub" id="dayPickSub"></p>
     <div class="daygrid" id="dayGrid"></div>
-    <button class="btn pickswitch" id="pickToTest">📝 여러 Day 골라서 시험보기</button>
+    <button class="btn pickswitch" id="pickToTest">📝 여러 Day/Unit 골라서 시험보기</button>
   </div></div>
   <div class="pickbar" id="pickBar">
     <div class="inner">
@@ -171,8 +171,8 @@ catch(e){ document.documentElement.classList.add('locked'); }
 </div>
 <header>
   <div class="hrow">
-    <button class="backbtn" id="backPick" aria-label="Day 다시 선택">← Day 선택</button>
-    <h1>📘 <span class="long">파워토익 퀵스타트 · </span>미니 단어장<span class="long"> (Day 01–20)</span></h1>
+    <button class="backbtn" id="backPick" aria-label="Day/Unit 다시 선택">← Day/Unit 선택</button>
+    <h1>📘 <span class="long"></span>미니 단어장<span class="long"> (Day 01–20 · Unit 01–07)</span></h1>
   </div>
   <div class="tabs">
     <button class="tab on" data-tab="vocab">단어장</button>
@@ -190,11 +190,11 @@ catch(e){ document.documentElement.classList.add('locked'); }
       <button class="btn" id="vocabShuffle">🔀 새로고침</button>
       <button class="btn" id="vocabReset">원래 순서</button>
     </div>
-    <div class="daytitle"><h2><button class="daybtn" id="vTitle" title="Day 선택"></button></h2><span id="vCount"></span></div>
+    <div class="daytitle"><h2><button class="daybtn" id="vTitle" title="Day/Unit 선택"></button></h2><span id="vCount"></span></div>
     <div class="grid" id="vocabGrid"></div>
     <div class="pager">
-      <button class="btn" id="prevDay">← 이전 Day</button>
-      <button class="btn primary" id="nextDay">다음 Day →</button>
+      <button class="btn" id="prevDay">← 이전 Day/Unit</button>
+      <button class="btn primary" id="nextDay">다음 Day/Unit →</button>
     </div>
   </section>
 
@@ -895,7 +895,301 @@ lease|[명] 임대차 계약 [동] 임대하다|a lease agreement 임대 계약
 overseas|[형] 해외의 [부] 해외로|an overseas market 해외 시장
 hazardous|[형] 위험한|a hazardous road 위험한 도로
 abundant|[형] 풍부한, 많은|abundant food 풍부한 음식
-accustomed|[형] 익숙한|be accustomed to ~에 익숙하다`
+accustomed|[형] 익숙한|be accustomed to ~에 익숙하다`,
+// UNIT 01 - 품사 1 명사/대명사
+UNIT01: `advice|[명] 충고, 조언|useful advice 유용한 조언 · give advice 조언하다
+information|[명] 정보|detailed information 상세한 정보 · provide information 정보를 제공하다
+luggage, baggage|[명] 수하물, 짐|heavy luggage 무거운 짐 · check baggage 수하물을 부치다
+equipment|[명] 장비, 기기|safety equipment 안전 장비 · install new equipment 새 장비를 설치하다
+machinery|[명] 기계류|heavy machinery 중장비 · operate machinery 기계를 작동하다
+furniture|[명] 가구|office furniture 사무용 가구 · new furniture 새 가구
+mail|[명] 우편물|incoming mail 수신 우편물 · check the mail 우편물을 확인하다
+access|[명] 접근, 열람, 이용|have access to the database 데이터베이스에 접근할 수 있다
+research|[명] 연구, 조사|conduct research 조사를 실시하다 · extensive research 광범위한 조사
+authorization|[명] 허가, 인가|written authorization 서면 허가 · obtain authorization 허가를 받다
+approval|[명] 승인|final approval 최종 승인 · receive approval 승인을 받다
+consent|[명] 동의, 승낙|written consent 서면 동의 · obtain consent 동의를 얻다
+clothing|[명] 의류|protective clothing 보호복 · outdoor clothing 야외용 의류
+planning|[명] 기획, 수립|careful planning 신중한 계획 · strategic planning 전략적 기획
+funding|[명] 자금(제공)|additional funding 추가 자금 · secure funding 자금을 확보하다
+ticketing|[명] 티켓 발권|online ticketing 온라인 발권 · ticketing system 발권 시스템
+employment|[명] 고용, 채용|employment opportunities 취업 기회 · full-time employment 정규 고용
+permission|[명] 허가, 승인|written permission 서면 허가 · ask for permission 허가를 요청하다
+assistance|[명] 도움|technical assistance 기술 지원 · provide assistance 도움을 제공하다
+participation|[명] 참석, 참여|active participation 적극적인 참여 · encourage participation 참여를 독려하다
+satisfaction|[명] 만족|customer satisfaction 고객 만족 · improve satisfaction 만족도를 높이다
+seating|[명] 좌석 배치|additional seating 추가 좌석 · seating area 좌석 구역
+stationery|[명] 문구류|office stationery 사무용 문구류 · order stationery 문구류를 주문하다
+feedback|[명] 의견|customer feedback 고객 의견 · provide feedback 의견을 제공하다
+merchandise|[명] 상품|promotional merchandise 판촉 상품 · display merchandise 상품을 진열하다
+work|[명] 작업, 일|office work 사무 업무 · complete the work 업무를 완료하다`,
+
+  // UNIT 02 - 품사 2 형용사/부사
+UNIT02: `grateful|[형] 고마워하는|be grateful for your help 도움에 감사하다
+useless|[형] 쓸모없는|a useless device 쓸모없는 장치
+dangerous|[형] 위험한|a dangerous situation 위험한 상황
+innovative|[형] 혁신적인|an innovative solution 혁신적인 해결책
+official|[형] 공식적인|an official announcement 공식 발표
+mandatory|[형] 의무적인|mandatory training 의무 교육
+temporary|[형] 일시적인|a temporary position 임시직
+reliable|[형] 믿을 만한|a reliable supplier 믿을 만한 공급업체
+reliant|[형] 의존적인|be reliant on technology 기술에 의존하다
+efficient|[형] 효율적인|an efficient system 효율적인 시스템
+dependable|[형] 믿을 만한|a dependable employee 믿을 만한 직원
+dependent (on/upon)|[형] 의존적인|be dependent on imports 수입에 의존하다
+considerable|[형] 상당한|considerable progress 상당한 진전
+considerate (of)|[형] 배려하는|be considerate of others 다른 사람을 배려하다
+responsible (for)|[형] 책임 있는, 담당하는|be responsible for sales 판매를 담당하다
+responsive (to + N)|[형] 반응하는, 응하는|be responsive to requests 요청에 신속히 대응하다
+extensive|[형] 광범위한, 대대적인|extensive experience 풍부한 경험 · extensive research 광범위한 조사
+extended|[형] 연장된|an extended deadline 연장된 마감일
+industrial|[형] 산업의|industrial equipment 산업용 장비
+industrious|[형] 근면한|an industrious worker 근면한 근로자
+economic|[형] 경제의|economic growth 경제 성장
+economical|[형] 경제적인|an economical choice 경제적인 선택
+confident|[형] 자신 있는, 확신하는|be confident about the result 결과에 자신이 있다
+confidential|[형] 기밀의|confidential information 기밀 정보
+sensitive|[형] 민감한, 섬세한|sensitive information 민감한 정보
+sensible|[형] 현명한|a sensible decision 현명한 결정
+exhaustive|[형] 철저한, 완전한|an exhaustive review 철저한 검토
+exhausted|[형] 고갈된, 지친|exhausted workers 지친 근로자들
+forgetful|[형] 잘 잊어버리는|a forgetful employee 잘 잊어버리는 직원
+forgettable|[형] 잊혀지기 쉬운|a forgettable presentation 기억에 남지 않는 발표
+be beneficial to + N|[표현] ~에 득이 되다|be beneficial to employees 직원들에게 도움이 되다
+be conducive to + N|[표현] ~에 도움이 되다|be conducive to productivity 생산성 향상에 도움이 되다
+be suitable for|[표현] ~에 적합하다|be suitable for beginners 초보자에게 적합하다
+be ideal for|[표현] ~에 이상적이다|be ideal for business trips 출장에 이상적이다
+be responsive to + N|[표현] ~에 응하다, 반응하다|be responsive to customer needs 고객 요구에 대응하다
+be reflective of|[표현] ~을 반영하다|be reflective of current trends 현재 추세를 반영하다
+be subject to + N|[표현] ~되기 쉽다|be subject to change 변경될 수 있다
+be susceptible to + N|[표현] ~받기 쉽다, ~의 여지가 있다|be susceptible to damage 손상되기 쉽다
+be capable of|[표현] ~에 능하다|be capable of handling the task 그 업무를 처리할 능력이 있다
+be compatible with|[표현] ~와 호환이 되다|be compatible with the software 그 소프트웨어와 호환되다
+be indicative of|[표현] ~을 시사하다, 드러내다|be indicative of strong demand 높은 수요를 보여주다
+be vulnerable to + N|[표현] ~에 취약하다|be vulnerable to cyberattacks 사이버 공격에 취약하다
+be optimistic about|[표현] ~에 낙관적이다|be optimistic about sales 매출을 낙관하다
+be skeptical of|[표현] ~에 회의적이다|be skeptical of the proposal 그 제안에 회의적이다
+be critical to + N|[표현] ~에 중요하다|be critical to success 성공에 매우 중요하다
+be critical of|[표현] ~에 대해 비평적이다|be critical of the policy 그 정책을 비판하다
+be comparable in/with|[표현] ~면에서/~와 필적하다, 비슷하다|be comparable with competitors 경쟁사와 비슷하다
+be responsible for = be accountable for|[표현] ~에 책임이 있다|be responsible for the project 프로젝트를 책임지다
+be reliant on[upon] = be dependent on[upon]|[표현] ~에 의존적이다, ~에 달려 있다|be reliant on overseas suppliers 해외 공급업체에 의존하다
+be enthusiastic about = be passionate about|[표현] ~에 열성적이다|be enthusiastic about the project 프로젝트에 열의를 보이다
+approximately|[부] 대략|approximately 200 people 약 200명
+roughly|[부] 대략|roughly two hours 대략 두 시간
+nearly|[부] 거의|nearly 500 employees 거의 500명의 직원
+about / around|[부] 대략|about 30 minutes 약 30분
+up to|[부] 최대 ~까지|up to 100 people 최대 100명
+at least|[부] 최소, 적어도|at least ten minutes 최소 10분
+exactly|[부] 정확히|exactly at noon 정확히 정오에
+just|[부] 딱|just five minutes 딱 5분
+only|[부] 단지, 딱|only three seats 단지 세 자리
+more than|[부] ~ 이상|more than 100 applicants 100명 이상의 지원자
+less than|[부] ~ 미만, ~보다 적은|less than an hour 한 시간 미만
+over|[부] ~ 이상|over 500 customers 500명 이상의 고객
+recently|[부] 최근에|recently opened 최근에 문을 연
+previously|[부] 이전에|previously worked 이전에 근무했다
+formerly|[부] 이전에|formerly known as ~ 이전에 ~로 알려진
+once|[부] 한때|once a factory 한때 공장이었던
+regularly|[부] 정기적으로|regularly inspect equipment 장비를 정기적으로 점검하다
+periodically|[부] 정기적으로|periodically update the system 시스템을 주기적으로 업데이트하다
+occasionally|[부] 가끔|occasionally work overtime 가끔 야근하다
+routinely|[부] 일상적으로|routinely check records 기록을 일상적으로 확인하다
+typically|[부] 일반적으로|typically take three days 보통 3일이 걸리다
+generally|[부] 일반적으로|generally available 일반적으로 이용 가능한
+now|[부] 지금|now available 현재 이용 가능한
+currently|[부] 현재|currently under review 현재 검토 중인
+presently|[부] 현재|presently unavailable 현재 이용할 수 없는
+soon|[부] 곧|open soon 곧 개장하다
+shortly|[부] 곧|depart shortly 곧 출발하다`,
+
+  // UNIT 05 - 동사 3 자동사/타동사
+UNIT05: `arrive in/at|[동] ~에 도착하다|arrive at the airport 공항에 도착하다
+deal with|[동] ~을 처리하다, 다루다|deal with complaints 불만을 처리하다
+depend on[upon]|[동] ~에 의존하다, 달려 있다|depend on the weather 날씨에 달려 있다
+rely on[upon]|[동] ~에 의존하다, 달려 있다|rely on a supplier 공급업체에 의존하다
+result in|[동] ~라는 결과를 낳다|result in additional costs 추가 비용을 초래하다
+result from|[동] ~이 원인이다|result from an error 오류에서 비롯되다
+respond to N|[동] ~에 응답(반응)하다|respond to an e-mail 이메일에 답변하다
+coincide with|[동] ~와 일치하다|coincide with the holiday 휴일과 겹치다
+focus on|[동] ~에 중점을 두다|focus on customer service 고객 서비스에 집중하다
+concentrate on|[동] ~에 집중하다|concentrate on the task 업무에 집중하다
+proceed with|[동] ~을 계속하다, 진행하다|proceed with the plan 계획을 진행하다
+proceed to N|[동] ~로 나아가다|proceed to the conference room 회의실로 이동하다
+belong to N|[동] ~에 속하다|belong to the company 회사 소유이다
+participate in|[동] ~에 참석하다|participate in a seminar 세미나에 참석하다
+wait for|[동] ~을 기다리다|wait for approval 승인을 기다리다
+appeal to N|[동] ~에 호소하다, 매력적이다|appeal to young customers 젊은 고객층의 관심을 끌다
+communicate with|[동] ~와 소통하다|communicate with clients 고객과 소통하다
+qualify for|[동] ~에 자격을 얻다|qualify for a discount 할인 자격이 되다
+consist of|[동] ~로 구성되다|consist of five members 다섯 명으로 구성되다
+dispose of|[동] ~을 처리하다, 없애다|dispose of waste 폐기물을 처리하다
+differ in/from|[동] ~에서/~와 다르다|differ in price 가격에서 차이가 나다
+collaborate with/on|[동] ~와/~에 대해 협력하다|collaborate with a local firm 현지 업체와 협력하다
+call off|[동] ~을 취소하다|call off the meeting 회의를 취소하다
+put off|[동] ~을 연기하다|put off the event 행사를 연기하다
+enroll in|[동] ~에 등록하다|enroll in a course 강좌에 등록하다
+register for|[동] ~에 등록하다|register for the workshop 워크숍에 등록하다
+account for|[동] ~을 설명하다; (비율을) 차지하다|account for 50 percent 50퍼센트를 차지하다
+refer to N|[동] ~을 참고하다, 보다|refer to the manual 설명서를 참고하다
+comment on|[동] ~에 대해 논평하다|comment on the proposal 제안에 대해 논평하다
+consent to N|[동] ~에 동의하다|consent to the changes 변경 사항에 동의하다
+comply with|[동] ~을 따르다, 준수하다|comply with safety regulations 안전 규정을 준수하다
+conform to N|[동] ~을 따르다|conform to standards 기준을 따르다
+interfere with|[동] ~을 방해하다|interfere with work 업무를 방해하다
+refrain from|[동] ~을 삼가다, 자제하다|refrain from using phones 휴대전화 사용을 삼가다
+subscribe to N|[동] ~을 구독(가입)하다|subscribe to a newsletter 뉴스레터를 구독하다
+specialize in|[동] ~을 전문으로 하다|specialize in marketing 마케팅을 전문으로 하다
+inquire about|[동] ~에 대해 문의하다|inquire about the price 가격을 문의하다
+inquire into|[동] ~을 조사하다|inquire into the cause 원인을 조사하다
+succeed in|[동] ~에 성공하다|succeed in reducing costs 비용 절감에 성공하다
+succeed to N|[동] ~을 물려받다|succeed to the position 그 직위를 승계하다
+look at|[동] ~을 보다|look at the chart 차트를 보다
+look for|[동] ~을 찾다|look for a new employee 새 직원을 찾다
+look over|[동] ~을 검토하다|look over the contract 계약서를 검토하다
+look into|[동] ~을 조사하다|look into the complaint 불만 사항을 조사하다
+come to|[동] ~로 오다|come to the office 사무실로 오다
+come with|[동] ~이 딸려 오다|come with a warranty 보증이 딸려 오다
+come by|[동] ~에 들르다|come by my office 내 사무실에 들르다
+come across|[동] ~을 우연히 마주치다|come across an article 우연히 기사를 발견하다
+go to|[동] ~로 가다|go to the bank 은행에 가다
+go with|[동] ~을 선택하다, ~와 어울리다|go with the cheaper option 더 저렴한 선택지를 택하다
+go over|[동] ~을 검토하다|go over the schedule 일정을 검토하다
+go through|[동] ~을 겪다|go through a review 검토 과정을 거치다
+turn on|[동] (전원 등을) 켜다|turn on the projector 프로젝터를 켜다
+turn off|[동] (전원 등을) 끄다|turn off the lights 불을 끄다
+turn in|[동] ~을 제출하다|turn in the report 보고서를 제출하다
+turn down|[동] ~을 거절하다|turn down the proposal 제안을 거절하다
+rise|[동] 증가하다, 오르다|prices rise 가격이 오르다
+arise|[동] (특히 문제 등이) 발생하다|problems arise 문제가 발생하다
+expire|[동] 만료되다, 만기가 되다|the contract expires 계약이 만료되다
+last|[동] 지속되다, 계속되다|last two hours 두 시간 지속되다
+happen|[동] 발생하다, 일어나다|an accident happens 사고가 발생하다
+diminish|[동] 줄어들다, 약화되다|demand diminishes 수요가 줄어들다
+take place|[동] 발생하다, 일어나다, 개최되다|the conference takes place 회의가 개최되다
+thrive, flourish|[동] 번창하다|businesses thrive 사업이 번창하다
+occur|[동] 발생하다, 일어나다|an error occurs 오류가 발생하다
+appear|[동] 나타나다, 발생하다|a message appears 메시지가 나타나다
+exist|[동] 존재하다|several options exist 여러 선택지가 존재하다
+disappear|[동] 사라지다|the problem disappears 문제가 사라지다
+return|[동] ~을 돌려주다, 반납하다|return the equipment 장비를 반납하다
+return to|[동] ~로 돌아가다|return to Seoul 서울로 돌아가다
+benefit|[동] ~에게 유익하다|benefit employees 직원들에게 도움이 되다
+benefit from|[동] ~로부터 득을 보다|benefit from the program 프로그램의 혜택을 받다
+communicate|[동] ~을 전하다, 알리다|communicate the changes 변경 사항을 전달하다
+communicate with|[동] ~와 소통하다|communicate with clients 고객과 소통하다
+report|[동] ~을 보고하다|report the problem 문제를 보고하다
+report to|[동] ~에게 알리다, ~로 가다|report to the manager 관리자에게 보고하다
+expand|[동] ~을 확장하다|expand the business 사업을 확장하다
+expand into|[동] ~로 진입하다, 진출하다|expand into overseas markets 해외 시장으로 진출하다
+begin, start|[동] ~을 시작하다|start the meeting 회의를 시작하다
+end, conclude|[동] ~을 끝내다|conclude the presentation 발표를 끝내다
+begin, start with|[동] ~로 시작하다|start with an introduction 소개로 시작하다
+end, conclude with|[동] ~로 끝나다|conclude with a Q&A 질의응답으로 마무리하다
+lead|[동] ~을 안내하다, 이끌다|lead the discussion 토론을 이끌다
+lead to|[동] (결과가) ~에 이르다, ~로 이어지다|lead to higher sales 매출 증가로 이어지다
+assemble|[동] ~을 조립하다, 모으다, 집합시키다|assemble the parts 부품을 조립하다 · assemble in the lobby 로비에 모이다
+assemble|[동] 모이다|assemble the parts 부품을 조립하다 · assemble in the lobby 로비에 모이다`,
+
+  // UNIT 06 - to부정사/동명사
+UNIT06: `want, wish, hope|[동] 원하다|hope to hear from you 연락을 받기를 바라다
+need|[동] 필요로 하다|need to submit the form 양식을 제출할 필요가 있다
+prefer|[동] 선호하다|prefer to travel by train 기차로 이동하는 것을 선호하다
+plan|[동] 계획하다|plan to expand 사업을 확장할 계획이다
+decide|[동] 결정하다|decide to postpone 연기하기로 결정하다
+promise / pledge|[동] 약속하다 / 서약하다|promise to deliver on time 제시간에 배송하겠다고 약속하다
+manage|[동] 해내다|manage to finish 끝내는 데 성공하다
+afford|[동] (경제/시간적) 여력이 되다|afford to buy the equipment 장비를 살 여력이 있다
+choose, opt|[동] 선택하다|choose to work remotely 재택근무를 선택하다
+try / attempt|[동] 노력하다 / 시도하다|try to solve the problem 문제를 해결하려고 노력하다
+tend|[동] 경향이 있다|tend to arrive early 일찍 도착하는 경향이 있다
+intend|[동] 의도하다|intend to hire more staff 직원을 더 채용할 의도이다
+pretend|[동] ~인 척하다|pretend to understand 이해하는 척하다
+refuse, decline|[동] 거절하다|refuse to comment 논평하기를 거절하다
+neglect|[동] 잊다, 방치하다|neglect to submit the form 양식 제출을 깜빡하다
+hesitate|[동] 망설이다, 주저하다|hesitate to ask 질문하기를 주저하다
+offer|[동] 제안하다|offer to help 돕겠다고 제안하다
+agree|[동] 합의하다, 동의하다|agree to extend the deadline 마감일 연장에 동의하다
+fail|[동] 실패하다|fail to meet the deadline 마감일을 지키지 못하다
+expect|[동] 기대하다|expect to increase sales 매출이 증가할 것으로 기대하다
+would like|[동] 하고자 하다, 원하다|would like to make a reservation 예약하고 싶다
+strive|[동] 노력하다|strive to improve service 서비스 개선을 위해 노력하다
+encourage|[동] 권장하다|encourage employees to participate 직원들의 참여를 독려하다
+ask|[동] 요청하다|ask him to call back 그에게 다시 전화해 달라고 요청하다
+allow|[동] 허가하다, 가능하게 하다|allow customers to return items 고객이 상품을 반품할 수 있게 하다
+invite|[동] 권유하다|invite guests to attend 손님들에게 참석을 권하다
+persuade|[동] 설득하다|persuade the client to sign 고객이 서명하도록 설득하다
+warn|[동] 경고하다|warn employees to be careful 직원들에게 주의하라고 경고하다
+force|[동] 강요하다|force the company to close 회사가 문을 닫게 만들다
+enable|[동] 가능하게 하다|enable users to access files 사용자가 파일에 접근할 수 있게 하다
+remind|[동] 상기시키다|remind me to call 전화하는 것을 상기시키다
+require|[동] 요구하다|require applicants to submit documents 지원자에게 서류 제출을 요구하다
+expect|[동] 기대하다, 예상하다|expect to increase sales 매출이 증가할 것으로 기대하다
+instruct|[동] 지시하다, 지침을 주다|instruct workers to wear helmets 근로자들에게 헬멧 착용을 지시하다
+advise|[동] 조언하다, 충고하다|advise customers to book early 고객에게 일찍 예약하라고 조언하다
+tell|[동] 말하다|tell him to wait 그에게 기다리라고 말하다
+time to + V|[표현] ~할 시간|time to leave 떠날 시간
+way to + V|[표현] ~할 방법|a way to reduce costs 비용을 줄이는 방법
+right to + V|[표현] ~할 권리|the right to request a refund 환불을 요청할 권리
+failure to + V|[표현] ~하는 데 실패/오류|failure to submit the form 양식을 제출하지 않음
+need to + V|[표현] ~할 필요성|the need to improve service 서비스 개선의 필요성
+decision to + V|[표현] ~하겠다는 결정|the decision to relocate 이전하기로 한 결정
+proposal to + V|[표현] ~하자는 제안|a proposal to cut costs 비용을 줄이자는 제안
+obligation to + V|[표현] ~할 의무|an obligation to protect data 데이터를 보호할 의무
+intention/plan to + V|[표현] ~할 의도/계획|a plan to open a branch 지점을 열 계획
+effort to + V|[표현] ~하려는 노력|an effort to reduce waste 폐기물을 줄이려는 노력
+ability/capability to + V|[표현] ~할 능력|the ability to solve problems 문제를 해결할 능력
+opportunity/chance to + V|[표현] ~할 기회|an opportunity to gain experience 경험을 쌓을 기회
+enjoy|[동] 즐기다|enjoy working with clients 고객과 함께 일하는 것을 즐기다
+finish|[동] 끝내다|finish preparing the report 보고서 준비를 끝내다
+consider|[동] 고려하다|consider moving the office 사무실 이전을 고려하다
+avoid|[동] 피하다|avoid making mistakes 실수하는 것을 피하다
+suggest|[동] 제안하다|suggest taking a taxi 택시를 타자고 제안하다
+recommend|[동] 권고하다, 추천하다|recommend booking early 일찍 예약할 것을 권하다
+include|[동] 포함하다|include installing the software 소프트웨어 설치를 포함하다
+mind|[동] 꺼리다|mind waiting a few minutes 몇 분 기다리는 것을 꺼리다
+risk|[동] 위험을 무릅쓰다|risk losing customers 고객을 잃을 위험을 감수하다
+dislike|[동] 싫어하다|dislike working overtime 야근하는 것을 싫어하다
+delay|[동] 미루다|delay making a decision 결정을 미루다
+postpone|[동] 미루다|postpone holding the event 행사 개최를 미루다
+tolerate|[동] 용인하다, 참다|tolerate working late 늦게까지 일하는 것을 참다
+discontinue|[동] 중단하다|discontinue producing the model 그 모델 생산을 중단하다
+keep|[동] 계속 ~하다|keep checking the website 웹사이트를 계속 확인하다
+deny|[동] 부인하다|deny receiving the file 파일을 받았다는 것을 부인하다
+give up|[동] 포기하다|give up trying 시도하는 것을 포기하다
+object to|[동] 반대하다|object to changing the schedule 일정 변경에 반대하다`,
+
+  // UNIT 07 - 분사(-ing/p.p.)
+UNIT07: `remaining|[형] 남아 있는|remaining seats 남아 있는 좌석
+existing|[형] 기존의, 존재하는|existing customers 기존 고객
+emerging|[형] 떠오르는, 부상하는|emerging markets 신흥 시장
+lasting|[형] 지속되는|a lasting effect 지속적인 영향
+working|[형] 일하는, 작동하는|working equipment 작동하는 장비
+rising|[형] 증가하는|rising costs 증가하는 비용
+challenging|[형] 힘든, 고된|a challenging task 어려운 업무
+surrounding|[형] 주변의|the surrounding area 주변 지역
+neighboring|[형] 인근의|neighboring cities 인근 도시들
+promising|[형] 유망한|a promising candidate 유망한 지원자
+leading|[형] 일류의|a leading company 일류 기업
+outstanding|[형] 훌륭한, 미지불된|outstanding balance 미지급 잔액
+growing|[형] 늘어나는, 증가하는|growing demand 증가하는 수요
+experienced|[형] 경험 많은|an experienced manager 경험 많은 관리자
+skilled|[형] 능숙한|skilled workers 숙련된 근로자들
+seasoned|[형] 경험 많은, 양념한|a seasoned professional 노련한 전문가
+qualified|[형] 자질이 뛰어난|qualified applicants 자격을 갖춘 지원자들
+complicated|[형] 복잡한|a complicated procedure 복잡한 절차
+preferred|[형] 선호되는, 선호하는|a preferred method 선호되는 방법
+designated|[형] 지정된|a designated area 지정된 구역
+detailed|[형] 상세한|a detailed report 상세한 보고서
+specialized|[형] 전문화된|specialized equipment 전문 장비
+distinguished|[형] 저명한, 현저한|a distinguished professor 저명한 교수
+accomplished|[형] 뛰어난, 성취한|an accomplished architect 뛰어난 건축가
+inviting|[형] 매력적인, 유혹적인|an inviting atmosphere 매력적인 분위기
+engaging|[형] 흥미를 유발하는|an engaging presentation 흥미로운 발표
+missing|[형] (짐, 물건이) 분실된|missing luggage 분실된 수하물
+invited|[형] 초대된, 초청된|invited guests 초대된 손님들
+engaged|[형] 열심인, 고용된|engaged employees 적극적으로 참여하는 직원들
+missed|[형] (일정, 수업 등을) 놓친|a missed appointment 놓친 약속`
 };
 
 /* ---------- 데이터 파싱 ---------- */
@@ -906,8 +1200,12 @@ Object.keys(RAW).forEach(k=>{
     return {w:p[0].trim(), m:p[1].trim(), e:(p[2]||'').trim()};
   });
 });
-const DAY_KEYS = Object.keys(DAYS).map(Number).sort((a,b)=>a-b);
-const dayLabel = d => 'Day ' + String(d).padStart(2,'0');
+// 숫자 키(1, 2, …)는 Day, 문자열 키(UNIT01, …)는 Unit — Day 먼저, 그다음 Unit 순
+const DAY_KEYS = Object.keys(DAYS).map(k=>/^\d+$/.test(k)?+k:k)
+  .sort((a,b)=>(typeof a===typeof b) ? (typeof a==='number' ? a-b : a.localeCompare(b)) : (typeof a==='number' ? -1 : 1));
+const dayKind = d => typeof d==='number' ? 'Day' : 'Unit';
+const dayNum = d => typeof d==='number' ? String(d).padStart(2,'0') : d.replace(/^\D+/,'');
+const dayLabel = d => dayKind(d) + ' ' + dayNum(d);
 
 /* ---------- 유틸 ---------- */
 const $ = s => document.querySelector(s);
@@ -967,8 +1265,8 @@ let pickMode = 'study', pickSel = new Set();
 function openDayPick(mode='study'){
   pickMode = mode;
   if(mode==='test') pickSel = new Set(testDays);
-  $('#dayPickTitle').textContent = mode==='test' ? '📝 시험 범위 선택' : '📘 Day 선택';
-  $('#dayPickSub').textContent = mode==='test' ? '시험 볼 Day를 모두 누르세요 (여러 개 선택 가능)' : '공부할 Day를 고르세요';
+  $('#dayPickTitle').textContent = mode==='test' ? '📝 시험 범위 선택' : '📘 Day/Unit 선택';
+  $('#dayPickSub').textContent = mode==='test' ? '시험 볼 Day/Unit을 모두 누르세요 (여러 개 선택 가능)' : '공부할 Day/Unit을 고르세요';
   $('#pickToTest').hidden = mode==='test';
   $('#pickBar').hidden = mode!=='test';
   $('#dayGrid').classList.toggle('multi', mode==='test');
@@ -980,9 +1278,9 @@ function openDayPick(mode='study'){
 function renderDayGrid(){
   const isOn = d => pickMode==='test' ? pickSel.has(d) : d===curDay;
   $('#dayGrid').innerHTML = DAY_KEYS.map(d=>
-    `<button class="dcell ${isOn(d)?'on':''}" data-d="${d}" aria-pressed="${isOn(d)}"><small>Day</small><b>${String(d).padStart(2,'0')}</b><small>${DAYS[d].length}단어</small></button>`).join('');
+    `<button class="dcell ${isOn(d)?'on':''}" data-d="${d}" aria-pressed="${isOn(d)}"><small>${dayKind(d)}</small><b>${dayNum(d)}</b><small>${DAYS[d].length}단어</small></button>`).join('');
   $('#dayGrid').querySelectorAll('.dcell').forEach(c=>c.onclick=()=>{
-    const d = +c.dataset.d;
+    const d = DAY_KEYS.find(k=>String(k)===c.dataset.d);
     if(pickMode==='test'){
       pickSel.has(d) ? pickSel.delete(d) : pickSel.add(d);
       renderDayGrid();
@@ -995,7 +1293,7 @@ function renderDayGrid(){
     const all = pickSel.size===DAY_KEYS.length;
     const n = new Set([...pickSel].flatMap(d=>DAYS[d].map(it=>it.w))).size;
     $('#pickAll').textContent = all ? '전체 해제' : '전체 선택';
-    $('#pickStart').textContent = pickSel.size ? `시험 시작 · Day ${pickSel.size}개 (${n}단어)` : 'Day를 골라 주세요';
+    $('#pickStart').textContent = pickSel.size ? `시험 시작 · ${pickSel.size}개 범위 (${n}단어)` : '범위를 골라 주세요';
     $('#pickStart').disabled = !pickSel.size;
   }
 }
@@ -1061,7 +1359,7 @@ let graded = false, showAns = false;
 let testSpecial = null; // null | 'star' | 'wrong'
 function rangeLabel(){
   const ds = DAY_KEYS.filter(d=>testDays.has(d));
-  if(ds.length===DAY_KEYS.length) return '전체 Day';
+  if(ds.length===DAY_KEYS.length) return '전체 Day/Unit';
   return ds.length<=3 ? ds.map(dayLabel).join(', ') : `${dayLabel(ds[0])} 외 ${ds.length-1}개`;
 }
 function renderTestChips(){
@@ -1095,7 +1393,7 @@ function renderTest(){
   renderTestChips();
   const mode = $('#mode').value;
   const ds = DAY_KEYS.filter(d=>testDays.has(d));
-  const title = testSpecial ? (testSpecial==='star'?'⭐ 모르는 단어':'❌ 오답 노트') : (ds.length===DAY_KEYS.length ? '전체 (Day 01–20)' : ds.map(dayLabel).join(', '));
+  const title = testSpecial ? (testSpecial==='star'?'⭐ 모르는 단어':'❌ 오답 노트') : (ds.length===DAY_KEYS.length ? '전체' : ds.map(dayLabel).join(', '));
   $('#sheetTitle').textContent = `📝 ${title} · 단어시험 ${testItems.length}문제 · ` + (mode==='en2ko'?'영어를 보고 한글 뜻을 쓰세요':'한글 뜻을 보고 영어 단어를 쓰세요');
   $('#score').textContent = '';
   if(!testItems.length){ $('#sheetBody').innerHTML = (testSpecial ? '<div class="empty">아직 저장된 단어가 없어요. 단어장에서 ⭐를 누르거나 시험에서 틀려 보세요.</div>' : '<div class="empty">출제할 단어가 없습니다.</div>'); return; }
