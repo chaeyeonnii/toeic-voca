@@ -1220,7 +1220,7 @@ function shuffle(a){
   return a;
 }
 function meaningHTML(m){
-  return esc(m).replace(/\[(명|동|형|부)\]/g,'<span class="pos" data-p="$1">$1</span>');
+  return esc(m).replace(/\[(명|동|형|부|표현)\]/g,'<span class="pos" data-p="$1">$1</span>');
 }
 function plainMeaning(m){ return m.replace(/\[[^\]]*\]/g,' ').replace(/\s+/g,' ').trim(); }
 const norm = s => s.toLowerCase().replace(/[\s~\-\.\(\)\[\],;\/·]/g,'');
